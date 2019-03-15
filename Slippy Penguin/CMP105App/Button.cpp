@@ -3,31 +3,22 @@
 #include "Framework/Collision.h"
 #include <iostream>
 
-//#define FONT_FILE_PATH "font/Pixel NES.otf"
-#define FONT_FILE_PATH "font/Pixel Gosub.otf"
 #define TEXTURE_FILE_PATH "gfx/Button.png"
 #define BUTTON_SIZE sf::Vector2f(256, 64)
 #define DEFAULT_TEXTURE_RECT sf::IntRect(0, 0, 64, 16)
 #define HOVER_TEXTURE_RECT sf::IntRect(0, 16, 64, 16)
 #define PRESSED_TEXTURE_RECT sf::IntRect(0, 32, 64, 16)
-#define FONT_SIZE 30
-#define TEXT_OUTLINE_THICKNESS 3
-#define TEXT_CENTRE_OFFSET sf::Vector2f(0, 6)
 
 
-Button::Button()
+Button::Button(GameData* _gameData) : gameData(_gameData)
 {
+	input = gameData->input;
+
 	setSize(BUTTON_SIZE);
 	setOrigin(getSize() * 0.5f);
 	setCollisionBox(sf::FloatRect(getSize().x * -0.5f, getSize().y * -0.5f, getSize().x, getSize().y));
 
-	if (!font.loadFromFile(FONT_FILE_PATH))
-	{
-		std::cout << "Unable to load " << FONT_FILE_PATH << std::endl;
-	}
-	text.setFont(font);
-	text.setCharacterSize(FONT_SIZE);
-	text.setOutlineThickness(TEXT_OUTLINE_THICKNESS);
+	gameData->fontSettings->applyRegularSettings(&text);
 
 	if (!texture.loadFromFile(TEXTURE_FILE_PATH))
 	{
@@ -47,10 +38,7 @@ void Button::setText(std::string _textString)
 {
 	textString = _textString;
 	text.setString(textString);
-
-	// Centre the origin
-	text.setOrigin(sf::Vector2f(text.getGlobalBounds().width / 2, text.getGlobalBounds().height / 2));
-	text.setOrigin(text.getOrigin() + TEXT_CENTRE_OFFSET); // Seems like a vertical offset gives a better centre. This probably varies between font.
+	gameData->fontSettings->centreTextOrigin(&text);
 }
 
 
@@ -95,10 +83,10 @@ void Button::update(float dt)
 
 
 // This is necessary because the text should be rendered whenever the button is rendered.
-void Button::render(sf::RenderWindow* window)
+void Button::render()
 {
-	window->draw(*this);
-	window->draw(text);
+	gameData->window->draw(*this);
+	gameData->window->draw(text);
 }
 
 

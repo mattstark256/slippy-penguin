@@ -17,10 +17,13 @@ void State::handleInput(float dt)
 {
 }
 
+
 // Update game objects
 void State::update(float dt)
 {
+	windowCentre = (sf::Vector2f)gameData->window->getSize() * 0.5f;
 }
+
 
 // Render level
 void State::render()
@@ -44,6 +47,7 @@ void State::beginDraw()
 {
 	gameData->window->clear(sf::Color(25, 57, 119));
 }
+
 
 // Ends rendering to the back buffer, and swaps buffer to the screen.
 void State::endDraw()

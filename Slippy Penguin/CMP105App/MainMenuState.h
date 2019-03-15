@@ -1,5 +1,6 @@
 #pragma once
 #include "MenuState.h"
+
 #include "Button.h"
 
 
@@ -8,7 +9,7 @@ class MainMenuState :
 	public MenuState
 {
 public:
-	MainMenuState(GameData* gameData);
+	MainMenuState(GameData* _gameData);
 	~MainMenuState();
 
 	virtual void handleInput(float dt);
@@ -18,6 +19,6 @@ protected:
 	virtual void renderObjects();
 
 private:
-	Button startButton;
+	Button* startButton;
 };
 

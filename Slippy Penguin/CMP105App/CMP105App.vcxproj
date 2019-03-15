@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="FontSettings.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
     <ClCompile Include="Framework\AudioManager.cpp" />
     <ClCompile Include="Framework\Collision.cpp" />
@@ -168,13 +169,19 @@
     <ClCompile Include="Framework\SoundObject.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
     <ClCompile Include="Framework\Vector.cpp" />
-    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelAState.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="LevelState.cpp" />
+    <ClCompile Include="LoseState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="PlayerData.cpp" />
+    <ClCompile Include="PreLevelState.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="TutorialState.cpp" />
+    <ClCompile Include="WinState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="DO_NOT_EDIT.txt" />
@@ -182,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="FontSettings.h" />
     <ClInclude Include="Framework\Animation.h" />
     <ClInclude Include="Framework\AudioManager.h" />
     <ClInclude Include="Framework\Collision.h" />
@@ -193,12 +201,18 @@
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="Framework\Vector.h" />
     <ClInclude Include="GameData.h" />
-    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelAState.h" />
+    <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="LevelState.h" />
+    <ClInclude Include="LoseState.h" />
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="PlayerData.h" />
+    <ClInclude Include="PreLevelState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="TutorialState.h" />
+    <ClInclude Include="WinState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,10 +4,10 @@
 #include "TutorialState.h"
 
 
-MainMenuState::MainMenuState(GameData* gameData) : MenuState(gameData)
+MainMenuState::MainMenuState(GameData* _gameData) : MenuState(_gameData)
 {
-	startButton.setText("Start game");
-	startButton.setInput(gameData->input);
+	startButton = new Button(gameData);
+	startButton->setText("Start game");
 }
 
 
@@ -18,11 +18,12 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::handleInput(float dt)
 {
-	startButton.handleInput(dt);
+	MenuState::handleInput(dt);
 
-	if (startButton.wasPressed())
+	startButton->handleInput(dt);
+
+	if (startButton->wasPressed())
 	{
-		std::cout << "button pressed\n";
 		gameData->stateManager->replaceState(new TutorialState(gameData));
 	}
 }
@@ -30,7 +31,9 @@ void MainMenuState::handleInput(float dt)
 
 void MainMenuState::update(float dt)
 {
-	startButton.setPosition((sf::Vector2f)gameData->window->getSize() * 0.5f);
+	MenuState::update(dt);
+
+	startButton->setPosition(windowCentre);
 }
 
 
@@ -38,5 +41,5 @@ void MainMenuState::renderObjects()
 {
 	MenuState::renderObjects();
 
-	startButton.render(gameData->window);
+	startButton->render();
 }
