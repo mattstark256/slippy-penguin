@@ -52,7 +52,7 @@ void TileMap::buildLevel()
 			y = (int)floor(i / mapSize.x);
 			tileSet[tileMap[i]].setPosition(position.x + (x * tileSize.x), position.y + (y * tileSize.y));
 			level.push_back(tileSet[tileMap[i]]);
-			level[i].setTexture(&texture);
+			//level[i].setTexture(&texture);
 		}
 	}
 }

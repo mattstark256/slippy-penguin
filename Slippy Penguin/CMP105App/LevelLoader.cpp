@@ -1,6 +1,7 @@
 #include "LevelLoader.h"
 
 #include "LevelAState.h"
+#include "LevelBState.h"
 #include <iostream>
 
 
@@ -24,6 +25,9 @@ LevelState* LevelLoader::loadLevel(int levelNumber, GameData* gameData)
 	case 1:
 		levelState = new LevelAState(gameData, levelNumber);
 		break;
+	case 2:
+		levelState = new LevelBState(gameData, levelNumber);
+		break;
 	default:
 		std::cout << "Levelloader::loadLevel couldn't find level number ";
 		std::cout << levelNumber;
@@ -38,5 +42,5 @@ LevelState* LevelLoader::loadLevel(int levelNumber, GameData* gameData)
 // This is used for checking whether the player has completed the game.
 bool LevelLoader::isFinalLevel(int levelNumber)
 {
-	return levelNumber == 1;
+	return levelNumber == 2;
 }

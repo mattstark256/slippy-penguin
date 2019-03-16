@@ -4,6 +4,7 @@
 
 LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData, _level)
 {
+	tilemapManager.generateTilemap("gfx/Levels/LevelA.png");
 }
 
 

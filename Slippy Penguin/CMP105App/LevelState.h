@@ -1,6 +1,8 @@
 #pragma once
 #include "State.h"
 
+#include "TilemapManager.h"
+
 
 class LevelState :
 	public State
@@ -14,9 +16,11 @@ public:
 
 protected:
 	int level;
+	TilemapManager tilemapManager;
 
 	virtual void renderObjects();
 	void win();
 	void lose(std::string loseMessage);
+	void openPauseMenu();
 };
 

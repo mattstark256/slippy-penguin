@@ -18,6 +18,12 @@ int PlayerData::getCompletedLevels()
 }
 
 
+bool PlayerData::saveDataExists()
+{
+	return completedLevels != 0;
+}
+
+
 // If the player's progress is less the stored value, update it. This means completing a level can never decrease the player's progress.
 void PlayerData::updateCompletedLevels(int completedLevel)
 {

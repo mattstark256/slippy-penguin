@@ -6,7 +6,7 @@
 #define CHARACTER_SIZE_REGULAR 30
 #define CHARACTER_SIZE_TITLE 50
 #define OUTLINE_THICKNESS 3
-#define TEXT_CENTRE_OFFSET sf::Vector2f(0, 6)
+#define TEXT_CENTRE_OFFSET sf::Vector2f(0, 5)
 
 
 FontSettings::FontSettings()

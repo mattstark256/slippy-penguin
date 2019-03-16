@@ -19,6 +19,9 @@ protected:
 	virtual void renderObjects();
 
 private:
-	Button* startButton;
+	sf::Text textTitle;
+	Button* newGameButton;
+	Button* continueButton;
+	Button* quitButton;
 };
 

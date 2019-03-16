@@ -4,13 +4,12 @@
 #include "Button.h"
 
 
-// This is the screen the player sees if they lose a level
-class LoseState :
+class PauseMenuState :
 	public MenuState
 {
 public:
-	LoseState(GameData* _gameData, int _level, std::string loseMessage);
-	~LoseState();
+	PauseMenuState(GameData* _gameData, int _level, int score, int targetScore);
+	~PauseMenuState();
 
 	virtual void handleInput(float dt);
 	virtual void update(float dt);
@@ -22,8 +21,9 @@ private:
 	int level;
 
 	sf::Text textTitle;
-	sf::Text textMessage;
-	Button* buttonContinue;
+	sf::Text textScore;
+	Button* buttonResume;
+	Button* buttonRestart;
 	Button* buttonQuit;
 };
 

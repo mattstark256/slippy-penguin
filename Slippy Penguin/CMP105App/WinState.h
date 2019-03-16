@@ -9,7 +9,7 @@ class WinState :
 	public MenuState
 {
 public:
-	WinState(GameData* gameData, int _level);
+	WinState(GameData* _gameData, int _level);
 	~WinState();
 
 	virtual void handleInput(float dt);

@@ -9,6 +9,7 @@ public:
 	~PlayerData();
 
 	int getCompletedLevels();
+	bool saveDataExists();
 	void updateCompletedLevels(int completedLevel);
 	void resetCompletedLevels();
 

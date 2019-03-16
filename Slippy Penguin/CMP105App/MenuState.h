@@ -18,5 +18,7 @@ protected:
 
 private:
 	sf::RectangleShape rectangle;
+	sf::Sprite wallpaper;
+	sf::Texture texture;
 };
 
