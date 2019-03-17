@@ -10,6 +10,7 @@
 
 LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), level(_level)
 {
+	camera = new Camera(gameData);
 }
 
 
@@ -37,6 +38,24 @@ void LevelState::handleInput(float dt)
 		gameData->input->setKeyUp(sf::Keyboard::Escape);
 		openPauseMenu();
 	}
+
+
+	if (gameData->input->isKeyDown(sf::Keyboard::A))
+	{
+		camera->move(sf::Vector3f(-200, 0, 0) * dt);
+	}
+	if (gameData->input->isKeyDown(sf::Keyboard::D))
+	{
+		camera->move(sf::Vector3f(200, 0, 0) * dt);
+	}
+	if (gameData->input->isKeyDown(sf::Keyboard::W))
+	{
+		camera->move(sf::Vector3f(0, 0, -200) * dt);
+	}
+	if (gameData->input->isKeyDown(sf::Keyboard::S))
+	{
+		camera->move(sf::Vector3f(0, 0, 200) * dt);
+	}
 }
 
 
@@ -50,7 +69,12 @@ void LevelState::renderObjects()
 {
 	State::renderObjects();
 
+	// Set up camera space rendering
+	gameData->window->setView(camera->getCameraView());
+
 	tilemapManager.render(gameData->window);
+
+	resetView();
 }
 
 

@@ -19,9 +19,9 @@ protected:
 	sf::Vector2f windowCentre; // This is needed very often so I store it.
 
 	virtual void renderObjects();
+	void resetView();
 
 private:
-	// Default functions for rendering to the screen.
 	void beginDraw();
 	void endDraw();
 };

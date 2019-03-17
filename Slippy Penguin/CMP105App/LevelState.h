@@ -2,6 +2,7 @@
 #include "State.h"
 
 #include "TilemapManager.h"
+#include "Camera.h"
 
 
 class LevelState :
@@ -17,6 +18,7 @@ public:
 protected:
 	int level;
 	TilemapManager tilemapManager;
+	Camera* camera;
 
 	virtual void renderObjects();
 	void win();

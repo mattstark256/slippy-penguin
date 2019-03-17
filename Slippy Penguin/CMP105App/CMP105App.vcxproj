@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FinalWinState.cpp" />
     <ClCompile Include="FontSettings.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="FinalWinState.h" />
     <ClInclude Include="FontSettings.h" />
     <ClInclude Include="Framework\Animation.h" />

@@ -54,3 +54,14 @@ void State::endDraw()
 {
 	gameData->window->display();
 }
+
+
+// Used for restoring the default view (0,0 at top left, 1 pixel per pixel).
+// It should be called after any view changes.
+// SFML's getDefaultView() function isn't suitable because it doesn't update when the player resizes the window.
+void State::resetView()
+{
+	gameData->window->setView(
+		sf::View((sf::Vector2f)gameData->window->getSize() * 0.5f, // centre
+		(sf::Vector2f)gameData->window->getSize())); // size
+}
