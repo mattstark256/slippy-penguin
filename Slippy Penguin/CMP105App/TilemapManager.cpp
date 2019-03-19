@@ -1,8 +1,9 @@
 #include "TilemapManager.h"
 
 #include <iostream>
+#include "Framework/Collision.h"
 
-#define TILE_SIZE sf::Vector2f(64, 64)
+#define TILE_SIZE sf::Vector2f(16, 16)
 #define TILEMAP_TEXTURE_FILE_PATH "gfx/Tilemap.png"
 
 
@@ -20,19 +21,31 @@ TilemapManager::TilemapManager()
 	tileIceCliff.setSize(TILE_SIZE);
 
 	tileWater.setTexture(&texture);
-	tileWater.setTextureRect(sf::IntRect(0, 32, 16, 16));
+	tileWater.setTextureRect(sf::IntRect(1, 37, 16, 16));
 
 	tileSnow.setTexture(&texture);
-	tileSnow.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	tileSnow.setTextureRect(sf::IntRect(1, 1, 16, 16));
+	tileSnow.setCollider(true);
+	tileSnow.setCollisionBox(0, 0, 16, 16);
+	tileSnow.setCollisionTag(1);
 
 	tileSnowCliff.setTexture(&texture);
-	tileSnowCliff.setTextureRect(sf::IntRect(0, 16, 16, 16));
+	tileSnowCliff.setTextureRect(sf::IntRect(1, 19, 16, 16));
+	tileSnowCliff.setCollider(true);
+	tileSnowCliff.setCollisionBox(0, 0, 16, 5);
+	tileSnowCliff.setCollisionTag(3);
 
 	tileIce.setTexture(&texture);
-	tileIce.setTextureRect(sf::IntRect(16, 0, 16, 16));
+	tileIce.setTextureRect(sf::IntRect(19, 1, 16, 16));
+	tileIce.setCollider(true);
+	tileIce.setCollisionBox(0, 0, 16, 16);
+	tileIce.setCollisionTag(2);
 
 	tileIceCliff.setTexture(&texture);
-	tileIceCliff.setTextureRect(sf::IntRect(16, 16, 16, 16));
+	tileIceCliff.setTextureRect(sf::IntRect(19, 19, 16, 16));
+	tileIceCliff.setCollider(true);
+	tileIceCliff.setCollisionBox(0, 0, 16, 5);
+	tileIceCliff.setCollisionTag(3);
 
 
 	std::vector<GameObject> tileset;
@@ -112,13 +125,32 @@ void TilemapManager::render(sf::RenderWindow* window)
 }
 
 
-bool TilemapManager::checkForGround()
+bool TilemapManager::checkForGround(GameObject* gameObject)
 {
-	return false;
+	return checkForCollisionWithTag(gameObject, 1);
 }
 
 
-bool TilemapManager::checkForIce()
+bool TilemapManager::checkForIce(GameObject* gameObject)
 {
+	return checkForCollisionWithTag(gameObject, 2);
+}
+
+
+bool TilemapManager::checkForCliff(GameObject* gameObject)
+{
+	return checkForCollisionWithTag(gameObject, 3);
+}
+
+
+bool TilemapManager::checkForCollisionWithTag(GameObject* gameObject, int tag)
+{
+	for (GameObject tile : *tileMap.getLevel())
+	{
+		if (tile.getCollisionTag() == tag && Collision::checkBoundingBox(gameObject, &tile))
+		{
+			return true;
+		}
+	}
 	return false;
 }

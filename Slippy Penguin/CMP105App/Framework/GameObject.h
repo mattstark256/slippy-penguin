@@ -34,6 +34,8 @@ public:
 	void setCollisionBox(float x, float y, float width, float height) { collisionBox = sf::FloatRect(x, y, width, height); };
 	void setCollisionBox(sf::FloatRect fr) { collisionBox = fr; };
 	virtual void collisionResponse(GameObject* collider);
+	int getCollisionTag() { return collisionTag; }
+	void setCollisionTag(int i) { collisionTag = i; }
 
 	// Set the input component
 	void setInput(Input* in) { input = in; };
@@ -46,6 +48,8 @@ protected:
 	// Collision vars
 	sf::FloatRect collisionBox;
 	bool collider;
+	// Used when only looking for collisions with certain object types 
+	int collisionTag;
 
 	// input component
 	Input* input;

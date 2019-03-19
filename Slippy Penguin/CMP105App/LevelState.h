@@ -3,6 +3,7 @@
 
 #include "TilemapManager.h"
 #include "Camera.h"
+#include "Player.h"
 
 
 class LevelState :
@@ -19,6 +20,7 @@ protected:
 	int level;
 	TilemapManager tilemapManager;
 	Camera* camera;
+	Player* player;
 
 	virtual void renderObjects();
 	void win();

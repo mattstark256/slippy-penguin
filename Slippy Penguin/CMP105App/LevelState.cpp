@@ -10,7 +10,9 @@
 
 LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), level(_level)
 {
+	player = new Player(gameData, &tilemapManager);
 	camera = new Camera(gameData);
+	camera->setSubject(player);
 }
 
 
@@ -22,6 +24,8 @@ LevelState::~LevelState()
 void LevelState::handleInput(float dt)
 {
 	State::handleInput(dt);
+
+	player->handleInput(dt);
 
 	// These are for testing purposes and should be disabled before the game is finished.
 	if (gameData->input->isKeyDown(sf::Keyboard::Num1))
@@ -38,30 +42,14 @@ void LevelState::handleInput(float dt)
 		gameData->input->setKeyUp(sf::Keyboard::Escape);
 		openPauseMenu();
 	}
-
-
-	if (gameData->input->isKeyDown(sf::Keyboard::A))
-	{
-		camera->move(sf::Vector3f(-200, 0, 0) * dt);
-	}
-	if (gameData->input->isKeyDown(sf::Keyboard::D))
-	{
-		camera->move(sf::Vector3f(200, 0, 0) * dt);
-	}
-	if (gameData->input->isKeyDown(sf::Keyboard::W))
-	{
-		camera->move(sf::Vector3f(0, 0, -200) * dt);
-	}
-	if (gameData->input->isKeyDown(sf::Keyboard::S))
-	{
-		camera->move(sf::Vector3f(0, 0, 200) * dt);
-	}
 }
 
 
 void LevelState::update(float dt)
 {
 	State::update(dt);
+
+	camera->update(dt);
 }
 
 
@@ -73,6 +61,7 @@ void LevelState::renderObjects()
 	gameData->window->setView(camera->getCameraView());
 
 	tilemapManager.render(gameData->window);
+	gameData->window->draw(*player);
 
 	resetView();
 }

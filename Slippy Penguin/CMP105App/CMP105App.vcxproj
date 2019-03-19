@@ -181,6 +181,7 @@
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseMenuState.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PreLevelState.cpp" />
     <ClCompile Include="State.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="MainMenuState.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="PauseMenuState.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerData.h" />
     <ClInclude Include="PreLevelState.h" />
     <ClInclude Include="State.h" />

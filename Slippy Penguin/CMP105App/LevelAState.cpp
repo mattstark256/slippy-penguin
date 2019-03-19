@@ -5,6 +5,9 @@
 LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData, _level)
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelA.png");
+
+	player->setPosition(sf::Vector2f(200, 100));
+	camera->jumpToTarget();
 }
 
 
