@@ -26,6 +26,7 @@ public:
 	void render(sf::RenderWindow* window);
 	// Returns the built level tile map. Used for collision detection, etc, where we need access to elements of the level.
 	std::vector<GameObject>* getLevel(){ return &level; };
+	sf::Vector2u getMapSize() { return mapSize; }
 
 	// Set the origin position of the tilemap section. 
 	void setPosition(sf::Vector2f pos) { position = pos; };

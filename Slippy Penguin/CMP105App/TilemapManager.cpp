@@ -25,27 +25,18 @@ TilemapManager::TilemapManager()
 
 	tileSnow.setTexture(&texture);
 	tileSnow.setTextureRect(sf::IntRect(1, 1, 16, 16));
-	tileSnow.setCollider(true);
 	tileSnow.setCollisionBox(0, 0, 16, 16);
 	tileSnow.setCollisionTag(1);
 
 	tileSnowCliff.setTexture(&texture);
 	tileSnowCliff.setTextureRect(sf::IntRect(1, 19, 16, 16));
-	tileSnowCliff.setCollider(true);
-	tileSnowCliff.setCollisionBox(0, 0, 16, 5);
-	tileSnowCliff.setCollisionTag(3);
-
 	tileIce.setTexture(&texture);
 	tileIce.setTextureRect(sf::IntRect(19, 1, 16, 16));
-	tileIce.setCollider(true);
 	tileIce.setCollisionBox(0, 0, 16, 16);
 	tileIce.setCollisionTag(2);
 
 	tileIceCliff.setTexture(&texture);
 	tileIceCliff.setTextureRect(sf::IntRect(19, 19, 16, 16));
-	tileIceCliff.setCollider(true);
-	tileIceCliff.setCollisionBox(0, 0, 16, 5);
-	tileIceCliff.setCollisionTag(3);
 
 
 	std::vector<GameObject> tileset;
@@ -125,32 +116,14 @@ void TilemapManager::render(sf::RenderWindow* window)
 }
 
 
-bool TilemapManager::checkForGround(GameObject* gameObject)
+sf::Vector2i TilemapManager::pointToTileCoords(sf::Vector2f point)
 {
-	return checkForCollisionWithTag(gameObject, 1);
+	return (sf::Vector2i)(point * (1.f/16));
 }
 
 
-bool TilemapManager::checkForIce(GameObject* gameObject)
+GameObject* TilemapManager::getTile(sf::Vector2u tileCoords)
 {
-	return checkForCollisionWithTag(gameObject, 2);
-}
-
-
-bool TilemapManager::checkForCliff(GameObject* gameObject)
-{
-	return checkForCollisionWithTag(gameObject, 3);
-}
-
-
-bool TilemapManager::checkForCollisionWithTag(GameObject* gameObject, int tag)
-{
-	for (GameObject tile : *tileMap.getLevel())
-	{
-		if (tile.getCollisionTag() == tag && Collision::checkBoundingBox(gameObject, &tile))
-		{
-			return true;
-		}
-	}
-	return false;
+	if (tileCoords.x > tileMap.getMapSize().x || tileCoords.y > tileMap.getMapSize().y) { return nullptr; }
+	return &((*tileMap.getLevel())[tileCoords.y *tileMap.getMapSize().x + tileCoords.x]);
 }

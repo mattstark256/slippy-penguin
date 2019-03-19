@@ -60,8 +60,7 @@ void Camera::updateTargetPosition()
 {
 	if (subject != nullptr)
 	{
-		sf::Vector2f playerCentre2D = subject->getPosition() + subject->getSize() * 0.5f;
-		sf::Vector3f playerCentre3D(playerCentre2D.x, playerCentre2D.y, 0);
+		sf::Vector3f playerCentre3D(subject->getPosition().x, subject->getPosition().y, 0);
 		targetPosition = playerCentre3D + followOffset;
 	}
 }

@@ -50,6 +50,7 @@ void LevelState::update(float dt)
 	State::update(dt);
 
 	camera->update(dt);
+	player->update(dt);
 }
 
 

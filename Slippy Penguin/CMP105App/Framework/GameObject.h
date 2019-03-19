@@ -48,8 +48,8 @@ protected:
 	// Collision vars
 	sf::FloatRect collisionBox;
 	bool collider;
-	// Used when only looking for collisions with certain object types 
-	int collisionTag;
+	// Used when only looking for collisions with certain object types.
+	int collisionTag = 0;
 
 	// input component
 	Input* input;

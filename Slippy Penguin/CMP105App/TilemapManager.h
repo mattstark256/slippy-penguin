@@ -13,9 +13,8 @@ public:
 	void generateTilemap(std::vector<int> tm, sf::Vector2u mapDimensions);
 	void generateTilemap(std::string imageFilepath);
 	void render(sf::RenderWindow* window);
-	bool checkForGround(GameObject* gameObject);
-	bool checkForIce(GameObject* gameObject);
-	bool checkForCliff(GameObject* gameObject);
+	sf::Vector2i pointToTileCoords(sf::Vector2f point);
+	GameObject* getTile(sf::Vector2u tileCoords);
 
 private:
 	TileMap tileMap;
@@ -26,7 +25,5 @@ private:
 	GameObject tileSnowCliff;
 	GameObject tileIce;
 	GameObject tileIceCliff;
-
-	bool checkForCollisionWithTag(GameObject* gameObject, int tag);
 };
 
