@@ -2,6 +2,7 @@
 #include "State.h"
 
 #include "TilemapManager.h"
+#include "ParticleManager.h"
 #include "Camera.h"
 #include "Player.h"
 
@@ -19,6 +20,7 @@ public:
 protected:
 	int level;
 	TilemapManager tilemapManager;
+	ParticleManager particleManager;
 	Camera* camera;
 	Player* player;
 

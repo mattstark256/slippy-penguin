@@ -10,7 +10,7 @@
 
 LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), level(_level)
 {
-	player = new Player(gameData, &tilemapManager);
+	player = new Player(gameData, &tilemapManager, &particleManager);
 	camera = new Camera(gameData);
 	camera->setSubject(player);
 }
@@ -49,6 +49,7 @@ void LevelState::update(float dt)
 {
 	State::update(dt);
 
+	particleManager.update(dt);
 	camera->update(dt);
 	player->update(dt);
 }
@@ -62,7 +63,8 @@ void LevelState::renderObjects()
 	gameData->window->setView(camera->getCameraView());
 
 	tilemapManager.render(gameData->window);
-	gameData->window->draw(*player);
+	particleManager.render(gameData->window);
+	player->render();
 
 	resetView();
 }
