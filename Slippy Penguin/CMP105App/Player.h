@@ -8,7 +8,7 @@ class LevelState; // This is needed in order to avoid circular dependency
 #include "FishManager.h"
 
 
-enum PlayerState { walking, sliding, falling, fallDeath };
+enum PlayerState { walking, sliding, falling, fallDeath, eating };
 
 
 class Player :
@@ -61,13 +61,21 @@ private:
 	float dieParticleinterval = 0.01f;
 	sf::RectangleShape* seamSplash; // This is a sprite used to cover the seam at the bottom of the killer whale
 
+	// Variables for the eating PlayerState
+	float eatTimer;
+	float eatDuration = 0.5f;
+	float eatParticleTimer;
+	float eatParticleinterval = 0.06f;
+
 
 	void walk(float dt);
 	void slide(float dt);
 	void fall(float dt);
 	void fallDie(float dt);
+	void eat(float dt);
 	void checkForCollisions();
 	void startFalling();
 	void startFallDeath();
+	void startEating();
 };
 

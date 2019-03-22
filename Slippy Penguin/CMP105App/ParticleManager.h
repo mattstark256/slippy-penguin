@@ -3,7 +3,7 @@
 #include <vector>
 #include "Particle.h"
 
-enum ParticleType { test, water, ice, blood };
+enum ParticleType { test, water, ice, blood, food };
 
 class ParticleManager
 {
@@ -24,5 +24,6 @@ private:
 	sf::Texture testParticleTexture;
 	sf::Texture waterParticleTexture;
 	sf::Texture iceParticleTexture;
+	sf::Texture foodParticleTexture;
 };
 

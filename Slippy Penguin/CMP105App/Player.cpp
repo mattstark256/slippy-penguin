@@ -46,6 +46,7 @@ void Player::update(float dt)
 	case sliding: slide(dt); break;
 	case falling: fall(dt); break;
 	case fallDeath: fallDie(dt); break;
+	case eating: eat(dt); break;
 	}
 }
 
@@ -67,7 +68,15 @@ void Player::walk(float dt)
 	velocity = Vector::normalise(inputVector) * walkSpeed;
 	move(velocity * dt);
 	checkForCollisions();
-	fishManager->tryTakingFish(this);
+
+	if (fishManager->allFishEaten())
+	{
+		level->win();
+	}
+	if (fishManager->tryTakingFish(this))
+	{
+		startEating();
+	}
 
 	// Decide which frame to use based on the walkTimer and movement direction.
 	if (inputVector == sf::Vector2f(0, 0))
@@ -90,6 +99,7 @@ void Player::slide(float dt)
 {
 	move(velocity * dt);
 	checkForCollisions();
+
 	fishManager->tryTakingFish(this);
 
 	setTextureRect(sf::IntRect(4 * 16, facingDirection * 16, 16, 16));
@@ -165,6 +175,29 @@ void Player::fallDie(float dt)
 }
 
 
+// Called on update when currentPlayerState is eating
+void Player::eat(float dt)
+{
+	eatTimer += dt;
+	if (eatTimer > eatDuration)
+	{
+		currentPlayerState = walking;
+	}
+
+	int frame = fmod(eatTimer * 12, 2);
+
+	setTextureRect(sf::IntRect((5 + frame) * 16, facingDirection * 16, 16, 16));
+
+	eatParticleTimer += dt;
+	if (eatParticleTimer > eatParticleinterval)
+	{
+		eatParticleTimer -= eatParticleinterval;
+		sf::Vector2f trajectory = particleManager->getPointInEllipse(sf::Vector2f(0, -20), sf::Vector2f(60, 30));
+		particleManager->createParticle(food, getPosition() + sf::Vector2f(0, -7), trajectory, 50, 0.5, 1);
+	}
+}
+
+
 // Check what the player is colliding with and react accordingly
 void Player::checkForCollisions()
 {
@@ -188,7 +221,7 @@ void Player::checkForCollisions()
 }
 
 
-// Prepare for falling state
+// Prepare for falling PlayerState
 void Player::startFalling()
 {
 	currentPlayerState = falling;
@@ -215,6 +248,8 @@ void Player::startFalling()
 	}
 }
 
+
+// Prepare for fallDeath PlayerState
 void Player::startFallDeath()
 {
 	currentPlayerState = fallDeath;
@@ -231,4 +266,12 @@ void Player::startFallDeath()
 	seamSplash->setPosition(dieStartPos);
 	seamSplash->setTexture(&texture);
 	seamSplash->setTextureRect(sf::IntRect(0, 7 * 16, 32, 16));
+}
+
+
+// Prepare for eating PlayerState
+void Player::startEating()
+{
+	currentPlayerState = eating;
+	eatTimer = 0;
 }

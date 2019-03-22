@@ -25,7 +25,7 @@ protected:
 	int level;
 	TilemapManager tilemapManager;
 	ParticleManager particleManager;
-	FishManager fishManager;
+	FishManager* fishManager;
 	Camera* camera;
 	Player* player;
 

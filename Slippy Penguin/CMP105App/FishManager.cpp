@@ -5,12 +5,22 @@
 #include "Framework/Collision.h"
 
 
-FishManager::FishManager()
+FishManager::FishManager(GameData* _gameData) : gameData(_gameData)
 {
 	if (!fishTexture.loadFromFile(FISH_TEXTURE_FILE_PATH))
 	{
 		std::cout << "Unable to load " << FISH_TEXTURE_FILE_PATH << std::endl;
 	}
+
+	text.setString("Test");
+	gameData->fontSettings->applyTitleSettings(&text);
+	text.setOrigin(40, 30);
+	text.setPosition(sf::Vector2f(140, 60));
+
+	fishIcon.setTexture(&fishTexture);
+	fishIcon.setSize(sf::Vector2f(100, 100));
+	fishIcon.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	fishIcon.setPosition(sf::Vector2f(10, 10));
 }
 
 
@@ -29,15 +39,31 @@ void FishManager::addFish(sf::Vector2i tile, int direction)
 	fish->setTexture(&fishTexture);
 	fish->setTextureRect(sf::IntRect(direction * 16, 0, 16, 16));
 	fishes.push_back(fish);
+	initialFishCount++;
 }
 
 
-void FishManager::render(sf::RenderWindow * window)
+void FishManager::update(float dt)
+{
+	textPulseAmount = textPulseAmount - (textPulseAmount - 1) * dt * 8;
+}
+
+
+void FishManager::render()
 {
 	for (auto fish : fishes)
 	{
-		window->draw(*fish);
+		gameData->window->draw(*fish);
 	}
+}
+
+
+void FishManager::renderUI()
+{
+	text.setString(std::to_string(initialFishCount - fishes.size()) + "/" + std::to_string(initialFishCount));
+	text.setScale(sf::Vector2f(textPulseAmount, textPulseAmount));
+	gameData->window->draw(fishIcon);
+	gameData->window->draw(text);
 }
 
 
@@ -48,9 +74,9 @@ bool FishManager::tryTakingFish(GameObject* playerObject)
 	{
 		if (Collision::checkBoundingBox(playerObject, *i))
 		{
-			std::cout << "fish collected" << std::endl;
 			i = fishes.erase(i);
 			fishTaken = true;
+			textPulseAmount = 1.5f;
 		}
 		else
 		{
@@ -58,4 +84,22 @@ bool FishManager::tryTakingFish(GameObject* playerObject)
 		}
 	}
 	return fishTaken;
+}
+
+
+bool FishManager::allFishEaten()
+{
+	return (fishes.size() == 0);
+}
+
+
+int FishManager::getFishEaten()
+{
+	return initialFishCount - fishes.size();
+}
+
+
+int FishManager::getInitialFishCount()
+{
+	return initialFishCount;
 }

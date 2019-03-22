@@ -10,7 +10,8 @@
 
 LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), level(_level)
 {
-	player = new Player(gameData, this, &tilemapManager, &particleManager, &fishManager);
+	fishManager = new FishManager(gameData);
+	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager);
 	camera = new Camera(gameData);
 	camera->setSubject(player);
 }
@@ -52,6 +53,7 @@ void LevelState::update(float dt)
 	particleManager.update(dt);
 	camera->update(dt);
 	player->update(dt);
+	fishManager->update(dt);
 }
 
 
@@ -63,11 +65,13 @@ void LevelState::renderObjects()
 	gameData->window->setView(camera->getCameraView());
 
 	tilemapManager.render(gameData->window);
-	fishManager.render(gameData->window);
+	fishManager->render();
 	particleManager.render(gameData->window);
 	player->render();
 
 	resetView();
+
+	fishManager->renderUI();
 }
 
 
@@ -95,5 +99,5 @@ void LevelState::lose(std::string loseMessage)
 
 void LevelState::openPauseMenu()
 {
-	gameData->stateManager->pushState(new PauseMenuState(gameData, level, 1, 3));
+	gameData->stateManager->pushState(new PauseMenuState(gameData, level, fishManager->getFishEaten(), fishManager->getInitialFishCount()));
 }
