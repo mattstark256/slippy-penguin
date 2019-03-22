@@ -1,15 +1,18 @@
 #include "Player.h"
 
 #include "Framework/Vector.h"
-#define PLAYER_TEXTURE_FILE_PATH "gfx/Penguin.png"
 #include <iostream>
+#include "LevelState.h"
+
+#define PLAYER_TEXTURE_FILE_PATH "gfx/Penguin.png"
 
 
-Player::Player(GameData* _gameData, TilemapManager* _tilemap, ParticleManager* _particleManager) : gameData(_gameData), tilemap(_tilemap), particleManager(_particleManager)
+Player::Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager) :
+	gameData(_gameData), level(_level), tilemap(_tilemap), particleManager(_particleManager), fishManager(_fishManager)
 {
 	setSize(sf::Vector2f(16, 16));
 	setOrigin(8, 11);
-	setCollisionBox(-4, -3, 8, 6);
+	setCollisionBox(-3, -2, 6, 4);
 
 	if (!texture.loadFromFile(PLAYER_TEXTURE_FILE_PATH))
 	{
@@ -64,6 +67,7 @@ void Player::walk(float dt)
 	velocity = Vector::normalise(inputVector) * walkSpeed;
 	move(velocity * dt);
 	checkForCollisions();
+	fishManager->tryTakingFish(this);
 
 	// Decide which frame to use based on the walkTimer and movement direction.
 	if (inputVector == sf::Vector2f(0, 0))
@@ -86,6 +90,7 @@ void Player::slide(float dt)
 {
 	move(velocity * dt);
 	checkForCollisions();
+	fishManager->tryTakingFish(this);
 
 	setTextureRect(sf::IntRect(4 * 16, facingDirection * 16, 16, 16));
 
@@ -96,6 +101,7 @@ void Player::slide(float dt)
 		sf::Vector2f trajectory = particleManager->getPointInEllipse(sf::Vector2f(0, -15), sf::Vector2f(50, 40));
 		particleManager->createParticle(ice, getPosition(), trajectory, 50, 0.5, 1);
 	}
+
 }
 
 
@@ -154,7 +160,7 @@ void Player::fallDie(float dt)
 
 	if (dieTimer > dieDuration + 1)
 	{
-		// end the level
+		level->lose("You got devoured by a killer whale!");
 	}
 }
 

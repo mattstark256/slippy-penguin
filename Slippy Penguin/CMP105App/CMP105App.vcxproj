@@ -160,6 +160,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="FinalWinState.cpp" />
+    <ClCompile Include="FishManager.cpp" />
     <ClCompile Include="FontSettings.cpp" />
     <ClCompile Include="Framework\Animation.cpp" />
     <ClCompile Include="Framework\AudioManager.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="FinalWinState.h" />
+    <ClInclude Include="FishManager.h" />
     <ClInclude Include="FontSettings.h" />
     <ClInclude Include="Framework\Animation.h" />
     <ClInclude Include="Framework\AudioManager.h" />

@@ -2,8 +2,10 @@
 #include "Framework/GameObject.h"
 
 #include "GameData.h"
+class LevelState; // This is needed in order to avoid circular dependency
 #include "TilemapManager.h"
 #include "ParticleManager.h"
+#include "FishManager.h"
 
 
 enum PlayerState { walking, sliding, falling, fallDeath };
@@ -13,7 +15,7 @@ class Player :
 	public GameObject
 {
 public:
-	Player(GameData* _gameData, TilemapManager* _tilemap, ParticleManager* _particleManager);
+	Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager);
 	~Player();
 
 	void handleInput(float dt);
@@ -22,8 +24,11 @@ public:
 
 private:
 	GameData* gameData;
+	LevelState* level;
 	TilemapManager* tilemap;
 	ParticleManager* particleManager;
+	FishManager* fishManager;
+
 	sf::Texture texture;
 
 	PlayerState currentPlayerState;

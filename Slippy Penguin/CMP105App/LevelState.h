@@ -3,6 +3,7 @@
 
 #include "TilemapManager.h"
 #include "ParticleManager.h"
+#include "FishManager.h"
 #include "Camera.h"
 #include "Player.h"
 
@@ -17,16 +18,18 @@ public:
 	virtual void handleInput(float dt);
 	virtual void update(float dt);
 
+	void win();
+	void lose(std::string loseMessage);
+
 protected:
 	int level;
 	TilemapManager tilemapManager;
 	ParticleManager particleManager;
+	FishManager fishManager;
 	Camera* camera;
 	Player* player;
 
 	virtual void renderObjects();
-	void win();
-	void lose(std::string loseMessage);
 	void openPauseMenu();
 };
 
