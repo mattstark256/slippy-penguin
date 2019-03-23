@@ -34,6 +34,12 @@
     <Filter Include="Source Files\States\Menus">
       <UniqueIdentifier>{f9d19ecc-6423-4e62-8fa8-d9d0940cb753}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Seals">
+      <UniqueIdentifier>{866d4d04-02e5-4e67-9bca-44deaba31713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Seals">
+      <UniqueIdentifier>{9e3a8a8c-f160-448f-a590-9be608ce7c2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -70,9 +76,6 @@
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="StateManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayerData.cpp">
@@ -141,6 +144,21 @@
     <ClCompile Include="FishManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="SealManager.cpp">
+      <Filter>Source Files\Seals</Filter>
+    </ClCompile>
+    <ClCompile Include="Seal.cpp">
+      <Filter>Source Files\Seals</Filter>
+    </ClCompile>
+    <ClCompile Include="SealCircle.cpp">
+      <Filter>Source Files\Seals</Filter>
+    </ClCompile>
+    <ClCompile Include="SealLine.cpp">
+      <Filter>Source Files\Seals</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -182,9 +200,6 @@
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StateManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameData.h">
@@ -244,9 +259,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ParticleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -255,6 +267,24 @@
     </ClInclude>
     <ClInclude Include="FishManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Seal.h">
+      <Filter>Header Files\Seals</Filter>
+    </ClInclude>
+    <ClInclude Include="SealManager.h">
+      <Filter>Header Files\Seals</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Header Files\States</Filter>
+    </ClInclude>
+    <ClInclude Include="SealLine.h">
+      <Filter>Header Files\Seals</Filter>
+    </ClInclude>
+    <ClInclude Include="SealCircle.h">
+      <Filter>Header Files\Seals</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

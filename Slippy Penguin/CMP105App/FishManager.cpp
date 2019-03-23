@@ -12,7 +12,6 @@ FishManager::FishManager(GameData* _gameData) : gameData(_gameData)
 		std::cout << "Unable to load " << FISH_TEXTURE_FILE_PATH << std::endl;
 	}
 
-	text.setString("Test");
 	gameData->fontSettings->applyTitleSettings(&text);
 	text.setOrigin(40, 30);
 	text.setPosition(sf::Vector2f(140, 60));
@@ -29,13 +28,13 @@ FishManager::~FishManager()
 }
 
 
-void FishManager::addFish(sf::Vector2i tile, int direction)
+void FishManager::addFish(sf::Vector2f position, int direction)
 {
 	GameObject* fish = new GameObject();
 	fish->setSize(sf::Vector2f(16, 16));
 	fish->setOrigin(fish->getSize() * 0.5f);
 	fish->setCollisionBox(-3, -3, 6, 6);
-	fish->setPosition((sf::Vector2f)(tile * 16 + sf::Vector2i(8, 8)));
+	fish->setPosition(position);
 	fish->setTexture(&fishTexture);
 	fish->setTextureRect(sf::IntRect(direction * 16, 0, 16, 16));
 	fishes.push_back(fish);
@@ -72,7 +71,7 @@ bool FishManager::tryTakingFish(GameObject* playerObject)
 	bool fishTaken = false;
 	for (auto i = fishes.begin(); i != fishes.end();)
 	{
-		if (Collision::checkBoundingBox(playerObject, *i))
+		if (Collision::checkBoundingBox(playerObject, *i) && !fishTaken)
 		{
 			i = fishes.erase(i);
 			fishTaken = true;

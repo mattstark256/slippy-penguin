@@ -187,6 +187,10 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PreLevelState.cpp" />
+    <ClCompile Include="Seal.cpp" />
+    <ClCompile Include="SealCircle.cpp" />
+    <ClCompile Include="SealLine.cpp" />
+    <ClCompile Include="SealManager.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="TilemapManager.cpp" />
@@ -228,6 +232,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerData.h" />
     <ClInclude Include="PreLevelState.h" />
+    <ClInclude Include="Seal.h" />
+    <ClInclude Include="SealCircle.h" />
+    <ClInclude Include="SealLine.h" />
+    <ClInclude Include="SealManager.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="TilemapManager.h" />

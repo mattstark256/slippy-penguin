@@ -11,7 +11,7 @@ public:
 	FishManager(GameData* _gameData);
 	~FishManager();
 
-	void addFish(sf::Vector2i tile, int direction);
+	void addFish(sf::Vector2f position, int direction);
 	void update(float dt);
 	void render();
 	void renderUI();

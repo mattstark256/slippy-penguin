@@ -6,14 +6,18 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelA.png");
 
-	player->setPosition(sf::Vector2f(13 * 16, 7 * 16));
+	player->setPosition(tileToPosition(13, 7));
 	camera->jumpToTarget();
 
-	fishManager->addFish(sf::Vector2i(8, 4), 0);
-	fishManager->addFish(sf::Vector2i(15, 3), 1);
-	fishManager->addFish(sf::Vector2i(16, 4), 2);
-	fishManager->addFish(sf::Vector2i(7, 7), 0);
-	fishManager->addFish(sf::Vector2i(13, 8), 0);
+	fishManager->addFish(tileToPosition(8, 4), 0);
+	fishManager->addFish(tileToPosition(15, 3), 1);
+	fishManager->addFish(tileToPosition(16, 4), 2);
+	fishManager->addFish(tileToPosition(7, 7), 0);
+	fishManager->addFish(tileToPosition(13, 8), 0);
+
+	sealManager->addSeal(tileToPosition(7, 7), 32, 0.125, 6);
+	sealManager->addSeal(tileToPosition(12.5, 7), tileToPosition(12.5, 12), 0.25, 5);
+	sealManager->addSeal(tileToPosition(10, 9.5), tileToPosition(15, 9.5), 0, 5);
 }
 
 

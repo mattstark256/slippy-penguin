@@ -4,6 +4,7 @@
 #include "TilemapManager.h"
 #include "ParticleManager.h"
 #include "FishManager.h"
+#include "SealManager.h"
 #include "Camera.h"
 #include "Player.h"
 
@@ -26,10 +27,13 @@ protected:
 	TilemapManager tilemapManager;
 	ParticleManager particleManager;
 	FishManager* fishManager;
+	SealManager* sealManager;
 	Camera* camera;
 	Player* player;
 
 	virtual void renderObjects();
 	void openPauseMenu();
+
+	sf::Vector2f tileToPosition(float x, float y);
 };
 
