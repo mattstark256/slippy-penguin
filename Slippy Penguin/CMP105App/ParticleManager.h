@@ -24,6 +24,7 @@ private:
 	sf::Texture testParticleTexture;
 	sf::Texture waterParticleTexture;
 	sf::Texture iceParticleTexture;
+	sf::Texture bloodParticleTexture;
 	sf::Texture foodParticleTexture;
 };
 

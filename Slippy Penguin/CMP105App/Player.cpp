@@ -40,12 +40,12 @@ void Player::handleInput(float dt)
 
 void Player::update(float dt)
 {
-	switch (currentPlayerState)
+	switch (playerState)
 	{
 	case walking: walk(dt); break;
 	case sliding: slide(dt); break;
 	case falling: fall(dt); break;
-	case fallDeath: fallDie(dt); break;
+	case whaleDeath: whaleDie(dt); break;
 	case eating: eat(dt); break;
 	case sealDeath: sealDie(dt); break;
 	}
@@ -54,11 +54,14 @@ void Player::update(float dt)
 
 void Player::render()
 {
-	gameData->window->draw(*this);
-
-	if (seamSplash != nullptr)
+	if (playerState != sealDeath)
 	{
-		gameData->window->draw(*seamSplash);
+		gameData->window->draw(*this);
+	}
+
+	if (whaleSeamSplash != nullptr)
+	{
+		gameData->window->draw(*whaleSeamSplash);
 	}
 }
 
@@ -108,6 +111,11 @@ void Player::slide(float dt)
 
 	fishManager->tryTakingFish(this);
 
+	if (sealManager->checkForSealAttack(this))
+	{
+		startSealDeath();
+	}
+
 	setTextureRect(sf::IntRect(4 * 16, facingDirection * 16, 16, 16));
 
 	slideParticleTimer += dt;
@@ -135,46 +143,46 @@ void Player::fall(float dt)
 	setPosition(horizontalPosition + verticalPosition);
 	if (f > 1)
 	{
-		startFallDeath();
+		startWhaleDeath();
 	}
 }
 
 
 // Called on update when currentPlayerState is fallDeath
-void Player::fallDie(float dt)
+void Player::whaleDie(float dt)
 {
-	dieTimer += dt;
+	whaleTimer += dt;
 
 	// Use f (float 0-1) to animate the player being grabbed by the whale
-	float f = dieTimer / dieDuration;
+	float f = whaleTimer / whaleDuration;
 	if (f < 1)
 	{
-		float sinkAmount = f * dieSinkHeight;
-		float jumpAmount = (1 - pow(f * 2 - 1, 2)) * dieJumpHeight;
-		setPosition(dieStartPos + sf::Vector2f(0, sinkAmount + jumpAmount));
+		float sinkAmount = f * whaleSinkHeight;
+		float jumpAmount = (1 - pow(f * 2 - 1, 2)) * whaleJumpHeight;
+		setPosition(whaleStartPos + sf::Vector2f(0, sinkAmount + jumpAmount));
 		int spriteHeight = 16 - sinkAmount - jumpAmount;
 		setSize(sf::Vector2f(32, spriteHeight));
 
-		int frame = fmod(dieTimer * 16, 2);
+		int frame = fmod(whaleTimer * 16, 2);
 		setTextureRect(sf::IntRect(frame * 32, 4 * 16, 32, spriteHeight));
 
-		dieParticleTimer += dt;
-		if (dieParticleTimer > dieParticleinterval)
+		whaleParticleTimer += dt;
+		if (whaleParticleTimer > whaleParticleinterval)
 		{
-			dieParticleTimer -= dieParticleinterval;
+			whaleParticleTimer -= whaleParticleinterval;
 			sf::Vector2f trajectory = particleManager->getPointInEllipse(sf::Vector2f(0, -30), sf::Vector2f(120, 80));
-			particleManager->createParticle(water, dieStartPos, trajectory, 100, 0.5, 1);
+			particleManager->createParticle(water, whaleStartPos, trajectory, 100, 0.5, 1);
 		}
 
-		frame = fmod(dieTimer * 12, 2);
-		seamSplash->setTextureRect(sf::IntRect(frame * 32, 7 * 16, 32, 16));
+		frame = fmod(whaleTimer * 12, 2);
+		whaleSeamSplash->setTextureRect(sf::IntRect(frame * 32, 7 * 16, 32, 16));
 	}
 	else
 	{
-		seamSplash = nullptr;
+		whaleSeamSplash = nullptr;
 	}
 
-	if (dieTimer > dieDuration + 1)
+	if (whaleTimer > whaleDuration + 1)
 	{
 		level->lose("You got devoured by a killer whale!");
 	}
@@ -187,7 +195,7 @@ void Player::eat(float dt)
 	eatTimer += dt;
 	if (eatTimer > eatDuration)
 	{
-		currentPlayerState = walking;
+		playerState = walking;
 	}
 
 	int frame = fmod(eatTimer * 12, 2);
@@ -206,10 +214,10 @@ void Player::eat(float dt)
 
 void Player::sealDie(float dt)
 {
-	sealDeathTimer += dt;
-	if (sealDeathTimer > sealDeathDuration)
+	sealTimer += dt;
+	if (sealTimer > sealDuration)
 	{
-		level->lose("a seal ate you");
+		level->lose("You got chewed on by a seal!");
 	}
 }
 
@@ -223,11 +231,11 @@ void Player::checkForCollisions()
 	{
 		if (currentTile->getCollisionTag() & 1)
 		{
-			currentPlayerState = walking;
+			playerState = walking;
 		}
 		else if (currentTile->getCollisionTag() & 2)
 		{
-			currentPlayerState = sliding;
+			playerState = sliding;
 		}
 		else
 		{
@@ -240,7 +248,7 @@ void Player::checkForCollisions()
 // Prepare for falling PlayerState
 void Player::startFalling()
 {
-	currentPlayerState = falling;
+	playerState = falling;
 	fallTimer = 0;
 
 	// Get the position where the fall starts
@@ -266,35 +274,35 @@ void Player::startFalling()
 
 
 // Prepare for fallDeath PlayerState
-void Player::startFallDeath()
+void Player::startWhaleDeath()
 {
-	currentPlayerState = fallDeath;
-	dieTimer = 0;
-	dieStartPos = getPosition();
+	playerState = whaleDeath;
+	whaleTimer = 0;
+	whaleStartPos = getPosition();
 
 	setSize(sf::Vector2f(32, 16));
 	setOrigin(16, 16);
 	setTextureRect(sf::IntRect(6 * 16, 0 * 16, 32, 16));
 
-	seamSplash = new sf::RectangleShape();
-	seamSplash->setSize(sf::Vector2f(32, 16));
-	seamSplash->setOrigin(seamSplash->getSize()*0.5f);
-	seamSplash->setPosition(dieStartPos);
-	seamSplash->setTexture(&texture);
-	seamSplash->setTextureRect(sf::IntRect(0, 7 * 16, 32, 16));
+	whaleSeamSplash = new sf::RectangleShape();
+	whaleSeamSplash->setSize(sf::Vector2f(32, 16));
+	whaleSeamSplash->setOrigin(whaleSeamSplash->getSize()*0.5f);
+	whaleSeamSplash->setPosition(whaleStartPos);
+	whaleSeamSplash->setTexture(&texture);
+	whaleSeamSplash->setTextureRect(sf::IntRect(0, 7 * 16, 32, 16));
 }
 
 
 // Prepare for eating PlayerState
 void Player::startEating()
 {
-	currentPlayerState = eating;
+	playerState = eating;
 	eatTimer = 0;
 }
 
 
 void Player::startSealDeath()
 {
-	currentPlayerState = sealDeath;
-	sealDeathTimer = 0;
+	playerState = sealDeath;
+	sealTimer = 0;
 }

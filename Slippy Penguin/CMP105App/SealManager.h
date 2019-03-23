@@ -2,12 +2,14 @@
 
 #include "Seal.h"
 #include "GameData.h"
+#include "Camera.h"
+#include "ParticleManager.h"
 
 
 class SealManager
 {
 public:
-	SealManager(GameData* _gameData);
+	SealManager(GameData* _gameData, Camera* _camera, ParticleManager* _particleManager);
 	~SealManager();
 
 	void addSeal(sf::Vector2f centre, float radius, float cyclePosition, float cycleDuration);
@@ -18,6 +20,8 @@ public:
 
 private:
 	GameData* gameData;
+	Camera* camera;
+	ParticleManager* particleManager;
 	std::vector<Seal*> seals;
 	sf::Texture sealTexture;
 };

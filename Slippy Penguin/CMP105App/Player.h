@@ -9,9 +9,6 @@ class LevelState; // This is needed in order to avoid circular dependency
 #include "SealManager.h"
 
 
-enum PlayerState { walking, sliding, falling, fallDeath, eating, sealDeath };
-
-
 class Player :
 	public GameObject
 {
@@ -23,7 +20,11 @@ public:
 	void update(float dt);
 	void render();
 
+	void setFacingDirection(int _facingDirection) { facingDirection = _facingDirection; }
+
 private:
+	enum PlayerState { walking, sliding, falling, whaleDeath, eating, sealDeath };
+
 	GameData* gameData;
 	LevelState* level;
 	TilemapManager* tilemap;
@@ -34,7 +35,7 @@ private:
 
 	sf::Texture texture;
 
-	PlayerState currentPlayerState;
+	PlayerState playerState;
 
 	// Variables for the walking PlayerState
 	float walkSpeed = 60;
@@ -54,15 +55,15 @@ private:
 	float fallTimer;
 	float fallDuration = 0.3f;
 
-	// Variables for the fallDeath PlayerState
-	sf::Vector2f dieStartPos;
-	float dieTimer;
-	float dieDuration = 1.8f;
-	float dieSinkHeight = 16;
-	float dieJumpHeight = -32;
-	float dieParticleTimer;
-	float dieParticleinterval = 0.01f;
-	sf::RectangleShape* seamSplash; // This is a sprite used to cover the seam at the bottom of the killer whale
+	// Variables for the whaleDeath PlayerState
+	sf::Vector2f whaleStartPos;
+	float whaleTimer;
+	float whaleDuration = 1.8f;
+	float whaleSinkHeight = 16;
+	float whaleJumpHeight = -32;
+	float whaleParticleTimer;
+	float whaleParticleinterval = 0.01f;
+	sf::RectangleShape* whaleSeamSplash; // This is a sprite used to cover the seam at the bottom of the killer whale
 
 	// Variables for the eating PlayerState
 	float eatTimer;
@@ -71,19 +72,19 @@ private:
 	float eatParticleinterval = 0.06f;
 
 	// Variables for the sealDeath PlayerState
-	float sealDeathTimer;
-	float sealDeathDuration = 2.f;
+	float sealTimer;
+	float sealDuration = 2.7f;
 
 
 	void walk(float dt);
 	void slide(float dt);
 	void fall(float dt);
-	void fallDie(float dt);
+	void whaleDie(float dt);
 	void eat(float dt);
 	void sealDie(float dt);
 	void checkForCollisions();
 	void startFalling();
-	void startFallDeath();
+	void startWhaleDeath();
 	void startEating();
 	void startSealDeath();
 };

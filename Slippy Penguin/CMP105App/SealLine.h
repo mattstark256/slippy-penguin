@@ -6,7 +6,7 @@ class SealLine :
 	public Seal
 {
 public:
-	SealLine(sf::Vector2f _point1, sf::Vector2f _point2, float _cyclePosition, float _cycleDuration);
+	SealLine(sf::Vector2f _point1, sf::Vector2f _point2, float _cyclePosition, float _cycleDuration, ParticleManager* _particleManager);
 	~SealLine();
 
 private:

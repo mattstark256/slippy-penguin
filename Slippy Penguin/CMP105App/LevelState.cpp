@@ -10,10 +10,10 @@
 
 LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), level(_level)
 {
-	fishManager = new FishManager(gameData);
-	sealManager = new SealManager(gameData);
-	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager, sealManager);
 	camera = new Camera(gameData);
+	sealManager = new SealManager(gameData, camera, &particleManager);
+	fishManager = new FishManager(gameData);
+	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager, sealManager);
 	camera->setSubject(player);
 }
 

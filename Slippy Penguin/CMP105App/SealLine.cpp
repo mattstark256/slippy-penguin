@@ -2,7 +2,8 @@
 
 
 
-SealLine::SealLine(sf::Vector2f _point1, sf::Vector2f _point2, float _cyclePosition, float _cycleDuration) : point1(_point1), point2(_point2), Seal(_cyclePosition, _cycleDuration)
+SealLine::SealLine(sf::Vector2f _point1, sf::Vector2f _point2, float _cyclePosition, float _cycleDuration, ParticleManager* _particleManager) :
+	point1(_point1), point2(_point2), Seal(_cyclePosition, _cycleDuration, _particleManager)
 {
 }
 

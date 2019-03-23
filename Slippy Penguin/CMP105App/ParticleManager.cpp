@@ -6,6 +6,7 @@
 #define TEST_PARTICLE_FILE_PATH "gfx/Particles/TestParticle.png"
 #define WATER_PARTICLE_FILE_PATH "gfx/Particles/WaterParticle.png"
 #define ICE_PARTICLE_FILE_PATH "gfx/Particles/IceParticle.png"
+#define BLOOD_PARTICLE_FILE_PATH "gfx/Particles/BloodParticle2.png"
 #define FOOD_PARTICLE_FILE_PATH "gfx/Particles/FoodParticle.png"
 
 
@@ -22,6 +23,10 @@ ParticleManager::ParticleManager()
 	if (!waterParticleTexture.loadFromFile(WATER_PARTICLE_FILE_PATH))
 	{
 		std::cout << "Unable to load " << WATER_PARTICLE_FILE_PATH << std::endl;
+	}
+	if (!bloodParticleTexture.loadFromFile(BLOOD_PARTICLE_FILE_PATH))
+	{
+		std::cout << "Unable to load " << BLOOD_PARTICLE_FILE_PATH << std::endl;
 	}
 	if (!foodParticleTexture.loadFromFile(FOOD_PARTICLE_FILE_PATH))
 	{
@@ -82,6 +87,7 @@ void ParticleManager::createParticle(ParticleType particleType, sf::Vector2f pos
 		particle = new Particle(sf::Vector2f(1, 1), &iceParticleTexture);
 		break;
 	case blood:
+		particle = new Particle(sf::Vector2f(1, 1), &bloodParticleTexture);
 		break;
 	case food:
 		particle = new Particle(sf::Vector2f(1, 1), &foodParticleTexture);
