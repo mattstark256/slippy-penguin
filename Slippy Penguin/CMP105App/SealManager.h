@@ -14,7 +14,7 @@ public:
 	void addSeal(sf::Vector2f point1, sf::Vector2f point2, float cyclePosition, float cycleDuration);
 	void update(float dt);
 	void render();
-	Seal* checkForCollision(GameObject* playerObject);
+	bool checkForSealAttack(GameObject* playerObject);
 
 private:
 	GameData* gameData;

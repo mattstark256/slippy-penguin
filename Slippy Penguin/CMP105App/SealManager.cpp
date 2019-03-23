@@ -3,6 +3,7 @@
 #include "SealCircle.h"
 #include "SealLine.h"
 #include <iostream>
+#include "Framework/Collision.h"
 
 #define SEAL_TEXTURE_FILE_PATH "gfx/Seal.png"
 
@@ -55,7 +56,19 @@ void SealManager::render()
 }
 
 
-Seal* SealManager::checkForCollision(GameObject* playerObject)
+bool SealManager::checkForSealAttack(GameObject* playerObject)
 {
-	return nullptr;
+	bool attacked = false;
+	for (auto i = seals.begin(); i != seals.end();)
+	{
+		if (Collision::checkBoundingBox(playerObject, *i) && !attacked)
+		{
+			attacked = true;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	return attacked;
 }

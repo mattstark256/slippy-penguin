@@ -6,16 +6,17 @@ class LevelState; // This is needed in order to avoid circular dependency
 #include "TilemapManager.h"
 #include "ParticleManager.h"
 #include "FishManager.h"
+#include "SealManager.h"
 
 
-enum PlayerState { walking, sliding, falling, fallDeath, eating };
+enum PlayerState { walking, sliding, falling, fallDeath, eating, sealDeath };
 
 
 class Player :
 	public GameObject
 {
 public:
-	Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager);
+	Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager, SealManager* _sealManager);
 	~Player();
 
 	void handleInput(float dt);
@@ -28,6 +29,8 @@ private:
 	TilemapManager* tilemap;
 	ParticleManager* particleManager;
 	FishManager* fishManager;
+	SealManager* sealManager;
+
 
 	sf::Texture texture;
 
@@ -67,15 +70,21 @@ private:
 	float eatParticleTimer;
 	float eatParticleinterval = 0.06f;
 
+	// Variables for the sealDeath PlayerState
+	float sealDeathTimer;
+	float sealDeathDuration = 2.f;
+
 
 	void walk(float dt);
 	void slide(float dt);
 	void fall(float dt);
 	void fallDie(float dt);
 	void eat(float dt);
+	void sealDie(float dt);
 	void checkForCollisions();
 	void startFalling();
 	void startFallDeath();
 	void startEating();
+	void startSealDeath();
 };
 

@@ -7,8 +7,8 @@
 #define PLAYER_TEXTURE_FILE_PATH "gfx/Penguin.png"
 
 
-Player::Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager) :
-	gameData(_gameData), level(_level), tilemap(_tilemap), particleManager(_particleManager), fishManager(_fishManager)
+Player::Player(GameData* _gameData, LevelState* _level, TilemapManager* _tilemap, ParticleManager* _particleManager, FishManager* _fishManager, SealManager* _sealManager) :
+	gameData(_gameData), level(_level), tilemap(_tilemap), particleManager(_particleManager), fishManager(_fishManager), sealManager(_sealManager)
 {
 	setSize(sf::Vector2f(16, 16));
 	setOrigin(8, 11);
@@ -47,6 +47,7 @@ void Player::update(float dt)
 	case falling: fall(dt); break;
 	case fallDeath: fallDie(dt); break;
 	case eating: eat(dt); break;
+	case sealDeath: sealDie(dt); break;
 	}
 }
 
@@ -76,6 +77,11 @@ void Player::walk(float dt)
 	if (fishManager->tryTakingFish(this))
 	{
 		startEating();
+	}
+
+	if (sealManager->checkForSealAttack(this))
+	{
+		startSealDeath();
 	}
 
 	// Decide which frame to use based on the walkTimer and movement direction.
@@ -198,6 +204,16 @@ void Player::eat(float dt)
 }
 
 
+void Player::sealDie(float dt)
+{
+	sealDeathTimer += dt;
+	if (sealDeathTimer > sealDeathDuration)
+	{
+		level->lose("a seal ate you");
+	}
+}
+
+
 // Check what the player is colliding with and react accordingly
 void Player::checkForCollisions()
 {
@@ -274,4 +290,11 @@ void Player::startEating()
 {
 	currentPlayerState = eating;
 	eatTimer = 0;
+}
+
+
+void Player::startSealDeath()
+{
+	currentPlayerState = sealDeath;
+	sealDeathTimer = 0;
 }

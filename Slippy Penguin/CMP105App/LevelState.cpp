@@ -12,7 +12,7 @@ LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), leve
 {
 	fishManager = new FishManager(gameData);
 	sealManager = new SealManager(gameData);
-	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager);
+	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager, sealManager);
 	camera = new Camera(gameData);
 	camera->setSubject(player);
 }
@@ -104,6 +104,7 @@ void LevelState::openPauseMenu()
 {
 	gameData->stateManager->pushState(new PauseMenuState(gameData, level, fishManager->getFishEaten(), fishManager->getInitialFishCount()));
 }
+
 
 sf::Vector2f LevelState::tileToPosition(float x, float y)
 {
