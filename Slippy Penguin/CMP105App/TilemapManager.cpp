@@ -5,13 +5,19 @@
 
 #define TILE_SIZE sf::Vector2f(16, 16)
 #define TILEMAP_TEXTURE_FILE_PATH "gfx/Tilemap.png"
+#define WATER_TEXTURE_FILE_PATH "gfx/Water.png"
+#define BORDER_SIZE sf::Vector2f(128, 128)
 
 
 TilemapManager::TilemapManager()
 {
-	if (!texture.loadFromFile(TILEMAP_TEXTURE_FILE_PATH))
+	if (!tilemapTexture.loadFromFile(TILEMAP_TEXTURE_FILE_PATH))
 	{
 		std::cout << "Unable to load " << TILEMAP_TEXTURE_FILE_PATH << std::endl;
+	}
+	if (!waterTexture.loadFromFile(WATER_TEXTURE_FILE_PATH))
+	{
+		std::cout << "Unable to load " << WATER_TEXTURE_FILE_PATH << std::endl;
 	}
 
 	tileWater.setSize(TILE_SIZE);
@@ -20,24 +26,24 @@ TilemapManager::TilemapManager()
 	tileIce.setSize(TILE_SIZE);
 	tileIceCliff.setSize(TILE_SIZE);
 
-	tileWater.setTexture(&texture);
-	tileWater.setTextureRect(sf::IntRect(1, 37, 16, 16));
+	tileWater.setTexture(&tilemapTexture);
+	tileWater.setTextureRect(sf::IntRect(55, 1, 16, 16));
 
-	tileSnow.setTexture(&texture);
+	tileSnow.setTexture(&tilemapTexture);
 	tileSnow.setTextureRect(sf::IntRect(1, 1, 16, 16));
 	tileSnow.setCollisionBox(0, 0, 16, 16);
 	tileSnow.setCollisionTag(1);
 
-	tileSnowCliff.setTexture(&texture);
+	tileSnowCliff.setTexture(&tilemapTexture);
 	tileSnowCliff.setTextureRect(sf::IntRect(1, 19, 16, 16));
-	tileIce.setTexture(&texture);
+
+	tileIce.setTexture(&tilemapTexture);
 	tileIce.setTextureRect(sf::IntRect(19, 1, 16, 16));
 	tileIce.setCollisionBox(0, 0, 16, 16);
 	tileIce.setCollisionTag(2);
 
-	tileIceCliff.setTexture(&texture);
-	tileIceCliff.setTextureRect(sf::IntRect(19, 19, 16, 16));
-
+	tileIceCliff.setTexture(&tilemapTexture);
+	tileIceCliff.setTextureRect(sf::IntRect(1, 37, 16, 16));
 
 	std::vector<GameObject> tileset;
 	tileset.push_back(tileWater);
@@ -46,29 +52,15 @@ TilemapManager::TilemapManager()
 	tileset.push_back(tileIce);
 	tileset.push_back(tileIceCliff);
 	tileMap.setTileSet(tileset);
+
+	waterTexture.setRepeated(true);
+	background.setTexture(&waterTexture);
+	background.setPosition(-BORDER_SIZE);
 }
 
 
 TilemapManager::~TilemapManager()
 {
-}
-
-
-void TilemapManager::generateTilemap(std::vector<int> tm, sf::Vector2u mapDimensions)
-{
-	// Convert water tiles under snow or ice tiles into the corresponding cliff tiles (this saves some effort in making levels)
-	for (int i = 0; i < tm.size(); i++)
-	{
-		int tileAbove = i - (int)mapDimensions.x;
-		if (tm[i] == 0 && tileAbove >= 0)
-		{
-			if (tm[tileAbove] == 1) { tm[i] = 2; }
-			if (tm[tileAbove] == 3) { tm[i] = 4; }
-		}
-	}
-
-	tileMap.setTileMap(tm, mapDimensions);
-	tileMap.buildLevel();
 }
 
 
@@ -107,12 +99,46 @@ void TilemapManager::generateTilemap(std::string imageFilepath)
 
 	tileMap.setTileMap(tiles, mapDimensions);
 	tileMap.buildLevel();
+
+	background.setSize((sf::Vector2f)(mapDimensions) * 16.f + BORDER_SIZE * 2.f);
+	background.setTextureRect(sf::IntRect(0, 0, background.getSize().x, background.getSize().y));
 }
 
 
 void TilemapManager::render(sf::RenderWindow* window)
 {
+	window->draw(background);
+
 	tileMap.render(window);
+}
+
+
+// I tried using an AnimatedTile class inheriting from GameObject for each inherited tile. However, there seemed to be an issue with calling the overridden update function. I think Framework/TileMap.h casts any tiles to GameObject, meaning classes inheriting from GameObject just become GameObject. Hence I've had to do the animation here.
+void TilemapManager::animateTiles(float dt)
+{
+	cliffWaterCycleTimer += dt / cliffWaterCycleDuration;
+	if (cliffWaterCycleTimer > 1) --cliffWaterCycleTimer;
+
+	for (int y = 0; y < tileMap.getMapSize().y; y++)
+	{
+		for (int x = 0; x < tileMap.getMapSize().x; x++)
+		{
+			GameObject* tile = &((*tileMap.getLevel())[y * tileMap.getMapSize().x + x]);
+
+			if (tile->getTextureRect().top == 19 || tile->getTextureRect().top == 37)
+			{
+				// X position is taken into account when calculating frame. This means horizontally adjacent tiles are out of sync with each other, giving the effect of ripples moving from right to left. 
+				int frame = (int)(cliffWaterCycleTimer * 6 + x) % 6;
+				tile->setTextureRect(sf::IntRect(1 + 18 * frame, tile->getTextureRect().top, 16, 16));
+			}
+		}
+	}
+
+	backgroundCycleTimer += dt / backgroundCycleDuration;
+	if (backgroundCycleTimer > 1) --backgroundCycleTimer;
+	int frame = (int)(backgroundCycleTimer * 4) % 4;
+	background.setTextureRect(sf::IntRect(0, 32 * frame, background.getTextureRect().width, background.getTextureRect().height));
+
 }
 
 
@@ -125,5 +151,5 @@ sf::Vector2i TilemapManager::pointToTileCoords(sf::Vector2f point)
 GameObject* TilemapManager::getTile(sf::Vector2u tileCoords)
 {
 	if (tileCoords.x > tileMap.getMapSize().x || tileCoords.y > tileMap.getMapSize().y) { return nullptr; }
-	return &((*tileMap.getLevel())[tileCoords.y *tileMap.getMapSize().x + tileCoords.x]);
+	return &((*tileMap.getLevel())[tileCoords.y * tileMap.getMapSize().x + tileCoords.x]);
 }

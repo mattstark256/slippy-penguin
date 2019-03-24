@@ -145,6 +145,8 @@ void Player::fall(float dt)
 	{
 		startWhaleDeath();
 	}
+
+	setTextureRect(sf::IntRect(1 * 16, facingDirection * 16, 16, 16));
 }
 
 

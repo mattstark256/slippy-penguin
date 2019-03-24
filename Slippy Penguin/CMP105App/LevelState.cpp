@@ -56,6 +56,8 @@ void LevelState::update(float dt)
 	player->update(dt);
 	fishManager->update(dt);
 	sealManager->update(dt);
+	tilemapManager.animateTiles(dt);
+	fallingSnow.update(dt);
 }
 
 
@@ -71,6 +73,7 @@ void LevelState::renderObjects()
 	particleManager.render(gameData->window);
 	sealManager->render();
 	player->render();
+	fallingSnow.render(gameData->window);
 
 	resetView();
 

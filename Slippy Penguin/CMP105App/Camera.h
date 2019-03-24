@@ -33,7 +33,7 @@ private:
 	// If a subject is specified it will lerp towards its position
 	GameObject* subject;
 	float followSpeed = 7;
-	sf::Vector3f followOffset = sf::Vector3f(0, 0, 150);
+	sf::Vector3f followOffset = sf::Vector3f(0.01, 0.01, 150); // The 0.01s prevent floating point errors when the camera lines up exactly with the pixel grid.
 
 	void updateTargetPosition();
 };

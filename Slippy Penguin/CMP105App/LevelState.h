@@ -7,6 +7,7 @@
 #include "SealManager.h"
 #include "Camera.h"
 #include "Player.h"
+#include "FallingSnow.h"
 
 
 class LevelState :
@@ -30,6 +31,7 @@ protected:
 	SealManager* sealManager;
 	Camera* camera;
 	Player* player;
+	FallingSnow fallingSnow;
 
 	virtual void renderObjects();
 	void openPauseMenu();

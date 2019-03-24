@@ -159,6 +159,9 @@
     <ClCompile Include="SealLine.cpp">
       <Filter>Source Files\Seals</Filter>
     </ClCompile>
+    <ClCompile Include="FallingSnow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -285,6 +288,9 @@
     </ClInclude>
     <ClInclude Include="SealCircle.h">
       <Filter>Header Files\Seals</Filter>
+    </ClInclude>
+    <ClInclude Include="FallingSnow.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
