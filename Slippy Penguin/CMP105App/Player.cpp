@@ -219,7 +219,7 @@ void Player::sealDie(float dt)
 	sealTimer += dt;
 	if (sealTimer > sealDuration)
 	{
-		level->lose("You got chewed on by a seal!");
+		level->lose("You got chewed on by a leopard seal!");
 	}
 }
 

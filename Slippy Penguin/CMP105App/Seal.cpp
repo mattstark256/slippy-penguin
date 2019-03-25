@@ -7,7 +7,7 @@ Seal::Seal(float _cyclePosition, float _cycleDuration, ParticleManager* _particl
 	setSize(sf::Vector2f(32, 32));
 	setOrigin(sf::Vector2f(16, 16));
 	setTextureRect(sf::IntRect(0, 0, 32, 32));
-	setCollisionBox(sf::FloatRect(-7, -5, 14, 10));
+	setCollisionBox(sf::FloatRect(-12, -9, 24, 18));
 }
 
 
