@@ -36,6 +36,9 @@ protected:
 	virtual void renderObjects();
 	void openPauseMenu();
 
+	// This is used so that levels can have unique objects that are rendered at an appropriate point in the pipeline, ie in front of the tilemap but behind falling snow.
+	virtual void renderUniqueLevelObjects();
+
 	sf::Vector2f tileToPosition(float x, float y);
 };
 

@@ -9,7 +9,7 @@ TutorialState::TutorialState(GameData* _gameData) : MenuState(_gameData)
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
-	textInstruction1.setString("- Use WASD to move\n- Collect all the fish\n- Don't get eaten");
+	textInstruction1.setString("- Move with arrow keys or WASD\n- Collect all the fish\n- Don't get eaten");
 	gameData->fontSettings->applyRegularSettings(&textInstruction1);
 	gameData->fontSettings->centreTextOrigin(&textInstruction1);
 

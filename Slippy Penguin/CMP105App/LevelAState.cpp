@@ -1,5 +1,7 @@
 #include "LevelAState.h"
 
+#include <iostream>
+#define ARROW_TEXTURE_FILE_PATH "gfx/Arrow.png"
 
 
 LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData, _level)
@@ -15,12 +17,25 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 	fishManager->addFish(tileToPosition(16, 4), 2);
 	fishManager->addFish(tileToPosition(12, 8), 1);
 
-	//sealManager->addSeal(tileToPosition(7, 7), 32, 0.125, 6);
-	//sealManager->addSeal(tileToPosition(12.5, 7), tileToPosition(12.5, 12), 0.25, 5);
-	//sealManager->addSeal(tileToPosition(10, 9.5), tileToPosition(15, 9.5), 0, 5);
+
+
+	if (!arrowTexture.loadFromFile(ARROW_TEXTURE_FILE_PATH))
+	{
+		std::cout << "Unable to load " << ARROW_TEXTURE_FILE_PATH << std::endl;
+	}
+	arrow.setTexture(&arrowTexture);
+	arrow.setPosition(tileToPosition(4.5, 5.5));
+	arrow.setSize((sf::Vector2f)arrowTexture.getSize());
 }
 
 
 LevelAState::~LevelAState()
 {
 }
+
+void LevelAState::renderUniqueLevelObjects()
+{
+	gameData->window->draw(arrow);
+}
+
+

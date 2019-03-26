@@ -8,5 +8,11 @@ class LevelAState :
 public:
 	LevelAState(GameData* _gameData, int _level);
 	~LevelAState();
+
+	void renderUniqueLevelObjects();
+
+private:
+	sf::Texture arrowTexture;
+	GameObject arrow;
 };
 

@@ -31,10 +31,10 @@ Player::~Player()
 void Player::handleInput(float dt)
 {
 	inputVector = sf::Vector2f(0, 0);
-	if (gameData->input->isKeyDown(sf::Keyboard::A)) { inputVector.x -= 1; }
-	if (gameData->input->isKeyDown(sf::Keyboard::D)) { inputVector.x += 1; }
-	if (gameData->input->isKeyDown(sf::Keyboard::W)) { inputVector.y -= 1; }
-	if (gameData->input->isKeyDown(sf::Keyboard::S)) { inputVector.y += 1; }
+	if (gameData->input->isKeyDown(sf::Keyboard::A) || gameData->input->isKeyDown(sf::Keyboard::Left)) { inputVector.x -= 1; }
+	if (gameData->input->isKeyDown(sf::Keyboard::D) || gameData->input->isKeyDown(sf::Keyboard::Right)) { inputVector.x += 1; }
+	if (gameData->input->isKeyDown(sf::Keyboard::W) || gameData->input->isKeyDown(sf::Keyboard::Up)) { inputVector.y -= 1; }
+	if (gameData->input->isKeyDown(sf::Keyboard::S) || gameData->input->isKeyDown(sf::Keyboard::Down)) { inputVector.y += 1; }
 }
 
 

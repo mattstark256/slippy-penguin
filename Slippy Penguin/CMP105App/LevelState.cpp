@@ -25,6 +25,9 @@ LevelState::~LevelState()
 
 void LevelState::handleInput(float dt)
 {
+	// This can't just be in the constructor because that would mean opening and closing the pause menu would leave the mouse visible
+	gameData->window->setMouseCursorVisible(false);
+
 	State::handleInput(dt);
 
 	player->handleInput(dt);
@@ -69,6 +72,7 @@ void LevelState::renderObjects()
 	gameData->window->setView(camera->getCameraView());
 
 	tilemapManager.render(gameData->window);
+	renderUniqueLevelObjects();
 	fishManager->render();
 	particleManager.render(gameData->window);
 	sealManager->render();
@@ -78,6 +82,11 @@ void LevelState::renderObjects()
 	resetView();
 
 	fishManager->renderUI();
+}
+
+
+void LevelState::renderUniqueLevelObjects()
+{
 }
 
 

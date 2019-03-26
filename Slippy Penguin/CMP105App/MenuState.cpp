@@ -9,6 +9,8 @@
 
 MenuState::MenuState(GameData* _gameData) : State(_gameData)
 {
+	gameData->window->setMouseCursorVisible(true);
+
 	rectangle.setSize(sf::Vector2f(400, 200));
 	rectangle.setFillColor(sf::Color::Red);
 
