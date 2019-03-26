@@ -82,11 +82,6 @@ void Player::walk(float dt)
 		startEating();
 	}
 
-	if (sealManager->checkForSealAttack(this))
-	{
-		startSealDeath();
-	}
-
 	// Decide which frame to use based on the walkTimer and movement direction.
 	if (inputVector == sf::Vector2f(0, 0))
 	{
@@ -111,6 +106,7 @@ void Player::slide(float dt)
 
 	fishManager->tryTakingFish(this);
 
+	// The player is only vulnerable to attacks while sliding.
 	if (sealManager->checkForSealAttack(this))
 	{
 		startSealDeath();

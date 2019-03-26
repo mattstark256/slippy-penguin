@@ -20,5 +20,5 @@ void SealCircle::updatePosition()
 	sf::Vector2f radiusVector = sf::Vector2f(cos(radians), sin(radians)) * radius;
 	setPosition(centre + radiusVector);
 
-	directionVector = sf::Vector2f(-sin(radians), cos(radians));
+	directionVector = sf::Vector2f(-sin(radians), cos(radians)) * cycleDuration;
 }

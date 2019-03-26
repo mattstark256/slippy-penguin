@@ -176,6 +176,9 @@
     <ClCompile Include="GameClock.cpp" />
     <ClCompile Include="LevelAState.cpp" />
     <ClCompile Include="LevelBState.cpp" />
+    <ClCompile Include="LevelCState.cpp" />
+    <ClCompile Include="LevelDState.cpp" />
+    <ClCompile Include="LevelEState.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="LevelState.cpp" />
     <ClCompile Include="LoseState.cpp" />
@@ -223,6 +226,9 @@
     <ClInclude Include="GameData.h" />
     <ClInclude Include="LevelAState.h" />
     <ClInclude Include="LevelBState.h" />
+    <ClInclude Include="LevelCState.h" />
+    <ClInclude Include="LevelDState.h" />
+    <ClInclude Include="LevelEState.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="LoseState.h" />

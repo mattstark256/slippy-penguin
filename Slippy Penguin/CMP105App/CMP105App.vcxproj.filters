@@ -162,6 +162,15 @@
     <ClCompile Include="FallingSnow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelCState.cpp">
+      <Filter>Source Files\States\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelDState.cpp">
+      <Filter>Source Files\States\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelEState.cpp">
+      <Filter>Source Files\States\Levels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -291,6 +300,15 @@
     </ClInclude>
     <ClInclude Include="FallingSnow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelCState.h">
+      <Filter>Header Files\States\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelDState.h">
+      <Filter>Header Files\States\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEState.h">
+      <Filter>Header Files\States\Levels</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
