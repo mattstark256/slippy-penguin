@@ -1,7 +1,7 @@
 #include "MainMenuState.h"
 
 #include <iostream>
-#include "TutorialState.h"
+#include "PrologueState.h"
 #include "PreLevelState.h"
 
 
@@ -43,7 +43,7 @@ void MainMenuState::handleInput(float dt)
 	{
 		// Delete any save data and start the tutorial
 		gameData->playerData->resetCompletedLevels();
-		gameData->stateManager->replaceState(new TutorialState(gameData));
+		gameData->stateManager->replaceState(new PrologueState(gameData));
 	}
 
 	if (gameData->playerData->saveDataExists())

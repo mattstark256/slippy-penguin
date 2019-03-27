@@ -191,6 +191,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PreLevelState.cpp" />
+    <ClCompile Include="PrologueState.cpp" />
     <ClCompile Include="Seal.cpp" />
     <ClCompile Include="SealCircle.cpp" />
     <ClCompile Include="SealLine.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerData.h" />
     <ClInclude Include="PreLevelState.h" />
+    <ClInclude Include="PrologueState.h" />
     <ClInclude Include="Seal.h" />
     <ClInclude Include="SealCircle.h" />
     <ClInclude Include="SealLine.h" />

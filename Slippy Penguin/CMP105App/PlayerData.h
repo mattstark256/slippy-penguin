@@ -14,6 +14,6 @@ public:
 	void resetCompletedLevels();
 
 private:
-	int completedLevels = 0;
+	int completedLevels = 4;
 };
 

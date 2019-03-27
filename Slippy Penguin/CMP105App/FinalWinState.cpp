@@ -1,6 +1,8 @@
 #include "FinalWinState.h"
 
 #include "MainMenuState.h"
+#include <iostream>
+#define STORY_PANEL_FILE_PATH "gfx/StoryPanels.png"
 
 
 
@@ -10,9 +12,18 @@ FinalWinState::FinalWinState(GameData* _gameData, int _level) : MenuState(_gameD
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
-	textMessage.setString("You finished the game! Well done!");
+	//textMessage.setString("You finished the game! Well done!\nPippa returns home and pukes the\nfish into her chick's mouth.");
+	textMessage.setString("You finished the game! Well done!\nPippa returns home and regurgitates\nthe fish for her chick.");
 	gameData->fontSettings->applyRegularSettings(&textMessage);
 	gameData->fontSettings->centreTextOrigin(&textMessage);
+
+	if (!texture.loadFromFile(STORY_PANEL_FILE_PATH))
+	{
+		std::cout << "Unable to load " << STORY_PANEL_FILE_PATH << std::endl;
+	}
+	storyPanel.setTexture(&texture);
+	storyPanel.setSize(sf::Vector2f(240, 160));
+	storyPanel.setOrigin(sf::Vector2f(120, 80));
 
 	buttonContinue = new Button(gameData);
 	buttonContinue->setText("Quit to menu");
@@ -41,9 +52,14 @@ void FinalWinState::update(float dt)
 {
 	MenuState::update(dt);
 
-	textTitle.setPosition(windowCentre + sf::Vector2f(0, -100));
-	textMessage.setPosition(windowCentre + sf::Vector2f(0, 0));
-	buttonContinue->setPosition(windowCentre + sf::Vector2f(0, 100));
+
+	textTitle.setPosition(windowCentre + sf::Vector2f(0, -225));
+	textMessage.setPosition(windowCentre + sf::Vector2f(0, -105));
+	storyPanel.setPosition(windowCentre + sf::Vector2f(0, 65));
+	buttonContinue->setPosition(windowCentre + sf::Vector2f(0, 225));
+
+	int frame = (int)(gameData->gameClock->getTime() * 10) % 2;
+	storyPanel.setTextureRect(sf::IntRect(0 + frame * 48, 32, 48, 32));
 }
 
 
@@ -53,5 +69,6 @@ void FinalWinState::renderObjects()
 
 	gameData->window->draw(textTitle);
 	gameData->window->draw(textMessage);
+	gameData->window->draw(storyPanel);
 	buttonContinue->render();
 }

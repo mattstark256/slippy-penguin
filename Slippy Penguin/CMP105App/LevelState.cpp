@@ -33,11 +33,11 @@ void LevelState::handleInput(float dt)
 	player->handleInput(dt);
 
 	// These are for testing purposes and should be disabled before the game is finished.
-	if (gameData->input->isKeyDown(sf::Keyboard::Num1))
+	if (gameData->input->isKeyDown(sf::Keyboard::Add))
 	{
 		win();
 	}
-	if (gameData->input->isKeyDown(sf::Keyboard::Num2))
+	if (gameData->input->isKeyDown(sf::Keyboard::Subtract))
 	{
 		lose("You pressed the lose key!");
 	}

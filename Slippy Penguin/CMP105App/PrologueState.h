@@ -4,13 +4,12 @@
 #include "Button.h"
 
 
-// This is the screen the player sees if they win the final level
-class FinalWinState :
+class PrologueState :
 	public MenuState
 {
 public:
-	FinalWinState(GameData* _gameData, int _level);
-	~FinalWinState();
+	PrologueState(GameData* gameData);
+	~PrologueState();
 
 	virtual void handleInput(float dt);
 	virtual void update(float dt);
@@ -18,12 +17,8 @@ public:
 protected:
 	virtual void renderObjects();
 
-private:
-	int level;
-
-	sf::Text textTitle;
-	sf::Text textMessage;
-	Button* buttonContinue;
+	sf::Text textInstruction1;
+	Button* startButton;
 	sf::Texture texture;
 	GameObject storyPanel;
 };

@@ -171,6 +171,9 @@
     <ClCompile Include="LevelEState.cpp">
       <Filter>Source Files\States\Levels</Filter>
     </ClCompile>
+    <ClCompile Include="PrologueState.cpp">
+      <Filter>Source Files\States\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt">
@@ -309,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="LevelEState.h">
       <Filter>Header Files\States\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="PrologueState.h">
+      <Filter>Header Files\States\Menus</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
