@@ -3,6 +3,8 @@
 #include "LevelLoader.h"
 #include "MainMenuState.h"
 #include "PreLevelState.h"
+#include <iostream>
+#define BACKGROUND_TEXTURE_FILE_PATH "gfx/PauseMenuBackground.png"
 
 
 PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int targetScore, LevelState* _pausedLevel) :
@@ -10,11 +12,15 @@ PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int t
 {
 	gameData->window->setMouseCursorVisible(true);
 
-	menuBackground.setSize(sf::Vector2f(650, 500));
-	menuBackground.setOrigin(sf::Vector2f(325, 250));
-	menuBackground.setFillColor(sf::Color(0, 0, 0, 200));
+	if (!backgroundTexture.loadFromFile(BACKGROUND_TEXTURE_FILE_PATH))
+	{
+		std::cout << "Unable to load " << BACKGROUND_TEXTURE_FILE_PATH << std::endl;
+	}
+	menuBackground.setTexture(&backgroundTexture);
+	menuBackground.setSize(sf::Vector2f(640, 496));
+	menuBackground.setOrigin(sf::Vector2f(320, 248));
 
-	textTitle.setString("Pause menu");
+	textTitle.setString("Paused");
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
@@ -76,8 +82,8 @@ void PauseMenuState::update(float dt)
 	State::update(dt);
 
 	menuBackground.setPosition(windowCentre);
-	textTitle.setPosition(windowCentre + sf::Vector2f(0, -160));
-	textScore.setPosition(windowCentre + sf::Vector2f(0, -80));
+	textTitle.setPosition(windowCentre + sf::Vector2f(0, -170));
+	textScore.setPosition(windowCentre + sf::Vector2f(0, -90));
 	buttonResume->setPosition(windowCentre + sf::Vector2f(0, 0));
 	buttonRestart->setPosition(windowCentre + sf::Vector2f(0, 80));
 	buttonQuit->setPosition(windowCentre + sf::Vector2f(0, 160));

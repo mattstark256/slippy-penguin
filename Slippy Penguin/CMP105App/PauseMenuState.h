@@ -26,7 +26,8 @@ private:
 	Button* buttonResume;
 	Button* buttonRestart;
 	Button* buttonQuit;
-	sf::RectangleShape menuBackground;
 	LevelState* pausedLevel;
+	sf::RectangleShape menuBackground;
+	sf::Texture backgroundTexture;
 };
 
