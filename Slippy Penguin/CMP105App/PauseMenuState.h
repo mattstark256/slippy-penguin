@@ -1,14 +1,15 @@
 #pragma once
-#include "MenuState.h"
+#include "State.h"
 
 #include "Button.h"
+#include "LevelState.h"
 
 
 class PauseMenuState :
-	public MenuState
+	public State
 {
 public:
-	PauseMenuState(GameData* _gameData, int _level, int score, int targetScore);
+	PauseMenuState(GameData* _gameData, int _level, int score, int targetScore, LevelState* _pausedLevel);
 	~PauseMenuState();
 
 	virtual void handleInput(float dt);
@@ -25,5 +26,7 @@ private:
 	Button* buttonResume;
 	Button* buttonRestart;
 	Button* buttonQuit;
+	sf::RectangleShape menuBackground;
+	LevelState* pausedLevel;
 };
 

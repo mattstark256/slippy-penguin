@@ -19,6 +19,7 @@ public:
 
 	virtual void handleInput(float dt);
 	virtual void update(float dt);
+	virtual void renderObjects();
 
 	void win();
 	void lose(std::string loseMessage);
@@ -33,7 +34,6 @@ protected:
 	Player* player;
 	FallingSnow fallingSnow;
 
-	virtual void renderObjects();
 	void openPauseMenu();
 
 	// This is used so that levels can have unique objects that are rendered at an appropriate point in the pipeline, ie in front of the tilemap but behind falling snow.

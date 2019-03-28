@@ -114,7 +114,7 @@ void LevelState::lose(std::string loseMessage)
 
 void LevelState::openPauseMenu()
 {
-	gameData->stateManager->pushState(new PauseMenuState(gameData, level, fishManager->getFishEaten(), fishManager->getInitialFishCount()));
+	gameData->stateManager->pushState(new PauseMenuState(gameData, level, fishManager->getFishEaten(), fishManager->getInitialFishCount(), this));
 }
 
 

@@ -5,8 +5,15 @@
 #include "PreLevelState.h"
 
 
-PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int targetScore) : MenuState(_gameData), level(_level)
+PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int targetScore, LevelState* _pausedLevel) :
+	State(_gameData), level(_level), pausedLevel(_pausedLevel)
 {
+	gameData->window->setMouseCursorVisible(true);
+
+	menuBackground.setSize(sf::Vector2f(650, 500));
+	menuBackground.setOrigin(sf::Vector2f(325, 250));
+	menuBackground.setFillColor(sf::Color(0, 0, 0, 200));
+
 	textTitle.setString("Pause menu");
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
@@ -33,7 +40,7 @@ PauseMenuState::~PauseMenuState()
 
 void PauseMenuState::handleInput(float dt)
 {
-	MenuState::handleInput(dt);
+	State::handleInput(dt);
 
 	buttonResume->handleInput(dt);
 	buttonRestart->handleInput(dt);
@@ -66,8 +73,9 @@ void PauseMenuState::handleInput(float dt)
 
 void PauseMenuState::update(float dt)
 {
-	MenuState::update(dt);
+	State::update(dt);
 
+	menuBackground.setPosition(windowCentre);
 	textTitle.setPosition(windowCentre + sf::Vector2f(0, -160));
 	textScore.setPosition(windowCentre + sf::Vector2f(0, -80));
 	buttonResume->setPosition(windowCentre + sf::Vector2f(0, 0));
@@ -78,8 +86,11 @@ void PauseMenuState::update(float dt)
 
 void PauseMenuState::renderObjects()
 {
-	MenuState::renderObjects();
+	State::renderObjects();
 
+	pausedLevel->renderObjects();
+
+	gameData->window->draw(menuBackground);
 	gameData->window->draw(textTitle);
 	gameData->window->draw(textScore);
 	buttonResume->render();
