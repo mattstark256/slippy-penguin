@@ -53,7 +53,7 @@ private:
 	sf::Vector2f fallStartPos;
 	sf::Vector2f fallEndPos;
 	float fallTimer;
-	float fallDuration = 0.3f;
+	float fallDuration = 0.25f;
 
 	// Variables for the whaleDeath PlayerState
 	sf::Vector2f whaleStartPos;

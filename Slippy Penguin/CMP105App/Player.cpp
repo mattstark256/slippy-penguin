@@ -280,6 +280,7 @@ void Player::startWhaleDeath()
 
 	setSize(sf::Vector2f(32, 16));
 	setOrigin(16, 16);
+	setPosition(whaleStartPos);
 	setTextureRect(sf::IntRect(6 * 16, 0 * 16, 32, 16));
 
 	whaleSeamSplash = new sf::RectangleShape();

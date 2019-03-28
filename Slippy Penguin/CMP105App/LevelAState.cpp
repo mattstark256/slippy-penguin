@@ -8,7 +8,7 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelA.png");
 
-	player->setPosition(tileToPosition(13, 7));
+	player->setPosition(tileToPosition(13, 6.5));
 	player->setFacingDirection(2);
 	camera->jumpToTarget();
 
