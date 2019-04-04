@@ -14,33 +14,17 @@ Camera::~Camera()
 }
 
 
-void Camera::setPosition(sf::Vector3f _position)
-{
-	position = _position;
-}
-
-
-void Camera::move(sf::Vector3f _moveVector)
-{
-	position += _moveVector;
-}
-
-
-void Camera::setVerticalFov(float _verticalFov)
-{
-	verticalFov = _verticalFov;
-}
-
-
 void Camera::update(float dt)
 {
 	updateTargetPosition();
 
-	float lerpValue = dt * followSpeed;
+	// Smoothly move towards the target position
+	float lerpValue = dt * moveSpeed;
 	position = position * (1 - lerpValue) + targetPosition * lerpValue;
 }
 
 
+// Move immediately to the target position, without smoothing
 void Camera::jumpToTarget()
 {
 	updateTargetPosition();
@@ -48,6 +32,7 @@ void Camera::jumpToTarget()
 }
 
 
+// Generate a View based on the camera's position and field of view
 sf::View Camera::getCameraView()
 {
 	float aspectRatio = (float)gameData->window->getSize().x / gameData->window->getSize().y;
@@ -60,7 +45,6 @@ void Camera::updateTargetPosition()
 {
 	if (subject != nullptr)
 	{
-		sf::Vector3f playerCentre3D(subject->getPosition().x, subject->getPosition().y, 0);
-		targetPosition = playerCentre3D + followOffset;
+		targetPosition = sf::Vector3f(subject->getPosition().x, subject->getPosition().y, 0) + followOffset;
 	}
 }

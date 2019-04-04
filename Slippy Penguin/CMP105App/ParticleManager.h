@@ -3,8 +3,12 @@
 #include <vector>
 #include "Particle.h"
 
+
+// This makes it easy to specify which particle type is to be emitted
 enum ParticleType { test, water, ice, blood, food };
 
+
+// This keeps track of all particles. It updates them and destroys them when they're dead.
 class ParticleManager
 {
 public:

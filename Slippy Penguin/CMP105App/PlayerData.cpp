@@ -35,6 +35,7 @@ void PlayerData::updateCompletedLevels(int completedLevel)
 
 
 // This is used when the player starts a new game to reset progress.
+// It's currently also used when they complete the last level so that the main menu no longer shows the "Continue" button.
 void PlayerData::resetCompletedLevels()
 {
 	completedLevels = 0;

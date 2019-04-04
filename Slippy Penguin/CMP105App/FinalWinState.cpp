@@ -5,14 +5,12 @@
 #define STORY_PANEL_FILE_PATH "gfx/StoryPanels.png"
 
 
-
 FinalWinState::FinalWinState(GameData* _gameData, int _level) : MenuState(_gameData), level(_level)
 {
 	textTitle.setString("Level " + std::to_string(level) + " complete!");
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
-	//textMessage.setString("You finished the game! Well done!\nPippa returns home and pukes the\nfish into her chick's mouth.");
 	textMessage.setString("You finished the game! Well done!\nPippa returns home and regurgitates\nthe fish for her chick.");
 	gameData->fontSettings->applyRegularSettings(&textMessage);
 	gameData->fontSettings->centreTextOrigin(&textMessage);
@@ -52,12 +50,12 @@ void FinalWinState::update(float dt)
 {
 	MenuState::update(dt);
 
-
 	textTitle.setPosition(windowCentre + sf::Vector2f(0, -225));
 	textMessage.setPosition(windowCentre + sf::Vector2f(0, -105));
 	storyPanel.setPosition(windowCentre + sf::Vector2f(0, 65));
 	buttonContinue->setPosition(windowCentre + sf::Vector2f(0, 225));
 
+	// The story panel is a looping two frame animation
 	int frame = (int)(gameData->gameClock->getTime() * 10) % 2;
 	storyPanel.setTextureRect(sf::IntRect(0 + frame * 48, 32, 48, 32));
 }

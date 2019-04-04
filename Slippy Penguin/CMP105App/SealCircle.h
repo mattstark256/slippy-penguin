@@ -2,6 +2,7 @@
 #include "Seal.h"
 
 
+// This type of seal moves around a circular route.
 class SealCircle :
 	public Seal
 {
@@ -10,6 +11,7 @@ public:
 	~SealCircle();
 
 private:
+	// The parameters of the route
 	sf::Vector2f centre;
 	float radius;
 

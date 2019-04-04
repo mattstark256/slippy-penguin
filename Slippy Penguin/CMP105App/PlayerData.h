@@ -1,6 +1,6 @@
 #pragma once
 
-// This class holds user data such as progress and settings.
+// This class holds user data. It currently holds level progress but could also hold settings etc.
 // If in future I add a way of saving data so it isn't lost between sessions, PlayerData will be an interface for that.
 class PlayerData
 {

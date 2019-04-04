@@ -9,6 +9,7 @@ class LevelState; // This is needed in order to avoid circular dependency
 #include "SealManager.h"
 
 
+// The player character
 class Player :
 	public GameObject
 {
@@ -23,8 +24,6 @@ public:
 	void setFacingDirection(int _facingDirection) { facingDirection = _facingDirection; }
 
 private:
-	enum PlayerState { walking, sliding, falling, whaleDeath, eating, sealDeath };
-
 	GameData* gameData;
 	LevelState* level;
 	TilemapManager* tilemap;
@@ -32,14 +31,15 @@ private:
 	FishManager* fishManager;
 	SealManager* sealManager;
 
-
 	sf::Texture texture;
+	sf::Vector2f inputVector;
 
+	// playerState is the current behaviour of the player character
+	enum PlayerState { walking, sliding, falling, whaleDeath, eating, sealDeath };
 	PlayerState playerState;
 
 	// Variables for the walking PlayerState
 	float walkSpeed = 60;
-	sf::Vector2f inputVector;
 	float walkTimer;
 	int walkPhase;
 	int facingDirection;
@@ -75,14 +75,13 @@ private:
 	float sealTimer;
 	float sealDuration = 2.7f;
 
-
 	void walk(float dt);
 	void slide(float dt);
 	void fall(float dt);
 	void whaleDie(float dt);
 	void eat(float dt);
 	void sealDie(float dt);
-	void checkForCollisions();
+	void checkForTilemapCollisions();
 	void startFalling();
 	void startWhaleDeath();
 	void startEating();

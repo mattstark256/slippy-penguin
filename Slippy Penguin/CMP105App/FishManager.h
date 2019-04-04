@@ -5,6 +5,7 @@
 #include "GameData.h"
 
 
+// This keeps track of all the collectible fish, as well as keeping track of how many have been taken.
 class FishManager
 {
 public:
@@ -24,10 +25,13 @@ private:
 	GameData* gameData;
 	std::vector<GameObject*> fishes;
 	sf::Texture fishTexture;
+
+	// The number of fish that have been generated
 	int initialFishCount;
 
 	sf::Text text;
 	GameObject fishIcon;
+	// When a fish is collected the fish counter UI temporarily expands, creating a pulse effect
 	float textPulseAmount = 1;
 };
 

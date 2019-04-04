@@ -3,9 +3,9 @@
 #include "PreLevelState.h"
 
 
-
 WinState::WinState(GameData* _gameData, int _level) : MenuState(_gameData), level(_level)
 {
+	// The title text shows the number of the completed level
 	textTitle.setString("Level " + std::to_string(level) + " complete!");
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);

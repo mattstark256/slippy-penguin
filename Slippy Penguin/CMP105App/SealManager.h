@@ -6,6 +6,7 @@
 #include "ParticleManager.h"
 
 
+// This class keeps track of all the seals in the level.
 class SealManager
 {
 public:

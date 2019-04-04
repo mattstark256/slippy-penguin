@@ -2,6 +2,7 @@
 #include "Seal.h"
 
 
+// This type of seal moves back and forth along a line.
 class SealLine :
 	public Seal
 {
@@ -10,6 +11,7 @@ public:
 	~SealLine();
 
 private:
+	// The end points of the line
 	sf::Vector2f point1;
 	sf::Vector2f point2;
 

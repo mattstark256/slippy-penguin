@@ -15,6 +15,7 @@ Button::Button(GameData* _gameData) : gameData(_gameData)
 	input = gameData->input;
 
 	setSize(BUTTON_SIZE);
+	// Centre the origin
 	setOrigin(getSize() * 0.5f);
 	setCollisionBox(sf::FloatRect(getSize().x * -0.5f, getSize().y * -0.5f, getSize().x, getSize().y));
 
@@ -46,30 +47,30 @@ void Button::handleInput(float dt)
 {
 	released = false;
 	bool mouseDown = input->isMouseLDown();
-	sf::Vector2i mousePosition(input->getMouseX(), input->getMouseY());
+	bool hovering = Collision::checkBoundingBox(this, sf::Vector2i(input->getMouseX(), input->getMouseY()));
 
-	// Check the button state
-	if (Collision::checkBoundingBox(this, mousePosition))
+	if (hovering)
 	{
-		hovering = true;
+		// If a press has begun
 		if (mouseDown && !mouseWasDown)
 		{
-			pressing = true;
+			pressed = true;
 		}
-		if (!mouseDown && pressing)
+		// If a press has ended
+		if (!mouseDown && pressed)
 		{
-			pressing = false;
+			pressed = false;
 			released = true;
 		}
 	}
 	else
 	{
-		hovering = false;
-		pressing = false;
+		// If the mouse is moved off the button mid-press the press gets cancelled
+		pressed = false;
 	}
 
 	// Set texture based on the button state
-	if (pressing) { setTextureRect(PRESSED_TEXTURE_RECT); }
+	if (pressed) { setTextureRect(PRESSED_TEXTURE_RECT); }
 	else if (hovering) { setTextureRect(HOVER_TEXTURE_RECT); }
 	else { setTextureRect(DEFAULT_TEXTURE_RECT); }
 

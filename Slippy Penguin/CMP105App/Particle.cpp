@@ -6,6 +6,7 @@ Particle::Particle(sf::Vector2f size, sf::Texture* texture)
 {
 	setSize(size);
 	setOrigin(size*0.5f);
+	// The size is used both for the object size and the texture rect. All the in-game textures use 1 unit world space = 1 pixel to ensure a uniform level of pixellation.
 	setTextureRect(sf::IntRect(sf::Vector2i(0, 0), (sf::Vector2i)size));
 	setTexture(texture);
 }

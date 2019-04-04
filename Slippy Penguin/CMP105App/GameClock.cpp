@@ -1,7 +1,6 @@
 #include "GameClock.h"
 
 
-
 GameClock::GameClock()
 {
 }

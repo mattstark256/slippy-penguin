@@ -4,7 +4,7 @@
 #include "Button.h"
 
 
-// This is the screen the player sees if they win the final level
+// This is the screen the player sees if they win the final level. It includes story text and an animation.
 class FinalWinState :
 	public MenuState
 {

@@ -1,7 +1,7 @@
 #include "ParticleManager.h"
 
 #include <iostream>
-#include <stdlib.h>     /* srand, rand */
+#include <stdlib.h> // rand
 #include "Framework/Vector.h"
 #define TEST_PARTICLE_FILE_PATH "gfx/Particles/TestParticle.png"
 #define WATER_PARTICLE_FILE_PATH "gfx/Particles/WaterParticle.png"
@@ -40,12 +40,14 @@ ParticleManager::~ParticleManager()
 }
 
 
+// Update all particles and destroy any dead ones
 void ParticleManager::update(float dt)
 {
 	for (auto i = particles.begin(); i != particles.end();)
 	{
 		if (!(*i)->alive)
 		{
+			(*i)->~Particle();
 			i = particles.erase(i);
 		}
 		else

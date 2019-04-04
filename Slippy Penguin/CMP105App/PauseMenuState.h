@@ -5,6 +5,7 @@
 #include "LevelState.h"
 
 
+// This is the state that is loaded when the player pauses the game. It doesn't inherit from MenuState because instead of using the menu background it renders the paused level behind it.
 class PauseMenuState :
 	public State
 {

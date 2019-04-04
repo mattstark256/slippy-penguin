@@ -2,7 +2,7 @@
 #include "State.h"
 
 
-// This is the base class for all menu screens. This means if I want them to all have the same background or something I can do it here.
+// This is the base class for all menu screens. They all have the same background.
 class MenuState :
 	public State
 {

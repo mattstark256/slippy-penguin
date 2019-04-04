@@ -15,6 +15,8 @@ LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), leve
 	fishManager = new FishManager(gameData);
 	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager, sealManager);
 	camera->setSubject(player);
+
+	gameData->audioManager->playMusicbyName("snowman");
 }
 
 
@@ -32,7 +34,7 @@ void LevelState::handleInput(float dt)
 
 	player->handleInput(dt);
 
-	// These are for testing purposes and should be disabled before the game is finished.
+	// + and - can be used to skip to the win and lose screens respectively. This is for testing and demonstration purposes.
 	if (gameData->input->isKeyDown(sf::Keyboard::Add))
 	{
 		win();
@@ -42,6 +44,7 @@ void LevelState::handleInput(float dt)
 		lose("You pressed the lose key!");
 	}
 
+	// Esc can be used to pause the game
 	if (gameData->input->isKeyDown(sf::Keyboard::Escape))
 	{
 		gameData->input->setKeyUp(sf::Keyboard::Escape);
@@ -79,12 +82,14 @@ void LevelState::renderObjects()
 	player->render();
 	fallingSnow.render(gameData->window);
 
+	// Set up screen space rendering
 	resetView();
 
 	fishManager->renderUI();
 }
 
 
+// This is overridden by derived classes.
 void LevelState::renderUniqueLevelObjects()
 {
 }
@@ -118,6 +123,7 @@ void LevelState::openPauseMenu()
 }
 
 
+// This is a helper function for converting tile coordinates to world coordinates
 sf::Vector2f LevelState::tileToPosition(float x, float y)
 {
 	return sf::Vector2f(x * 16 + 8, y * 16 + 8);

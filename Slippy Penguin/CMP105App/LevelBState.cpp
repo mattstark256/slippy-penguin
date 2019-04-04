@@ -1,7 +1,6 @@
 #include "LevelBState.h"
 
 
-
 LevelBState::LevelBState(GameData* _gameData, int _level) : LevelState(_gameData, _level)
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelB.png");
@@ -16,7 +15,7 @@ LevelBState::LevelBState(GameData* _gameData, int _level) : LevelState(_gameData
 	fishManager->addFish(tileToPosition(17, 10), 1);
 
 	sealManager->addSeal(tileToPosition(11.5, 8.5), tileToPosition(15.5, 8.5), 0.6, 4);
-	sealManager->addSeal(tileToPosition(5.5, 7.5), tileToPosition(5.5, 4.5), 0.2, 3.5);
+	sealManager->addSeal(tileToPosition(6, 7.5), tileToPosition(6, 4.5), 0.2, 3.5);
 }
 
 

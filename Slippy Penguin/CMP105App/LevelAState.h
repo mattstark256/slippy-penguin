@@ -12,6 +12,7 @@ public:
 	void renderUniqueLevelObjects();
 
 private:
+	// Level A has an arrow on the ice to hint that the player can slide diagonally.
 	sf::Texture arrowTexture;
 	GameObject arrow;
 };

@@ -21,6 +21,7 @@ public:
 	void render();
 	void setPosition(sf::Vector2f position);
 
+	// This will return true for one frame when the mouse finishes clicking on the button. This is used to trigger any events linked to the button.
 	bool wasPressed();
 
 private:
@@ -28,9 +29,8 @@ private:
 	sf::Texture texture;
 	std::string textString;
 	sf::Text text;
-	bool mouseWasDown = false;
-	bool hovering = false;
-	bool pressing = false;
+	bool mouseWasDown = false; // Whether the mouse was down in the previous frame
+	bool pressed = false;
 	bool released = false;
 };
 

@@ -23,7 +23,7 @@ private:
 
 	sf::Text textTitle;
 	sf::Text textMessage;
-	Button* buttonContinue;
+	Button* buttonRetry;
 	Button* buttonQuit;
 };
 

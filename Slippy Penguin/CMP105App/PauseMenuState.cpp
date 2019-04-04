@@ -24,6 +24,7 @@ PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int t
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
+	// Display the level number and current score
 	textScore.setString("Level " + std::to_string(level) + ": " + std::to_string(score) + "/" + std::to_string(targetScore) + " fish collected");
 	gameData->fontSettings->applyRegularSettings(&textScore);
 	gameData->fontSettings->centreTextOrigin(&textScore);
@@ -36,6 +37,8 @@ PauseMenuState::PauseMenuState(GameData* _gameData, int _level, int score, int t
 
 	buttonQuit = new Button(gameData);
 	buttonQuit->setText("Quit to menu");
+
+	gameData->audioManager->getMusic()->pause();
 }
 
 
@@ -48,29 +51,32 @@ void PauseMenuState::handleInput(float dt)
 {
 	State::handleInput(dt);
 
-	buttonResume->handleInput(dt);
-	buttonRestart->handleInput(dt);
-	buttonQuit->handleInput(dt);
-
 	// The player can close the pause menu using either the "Resume" button or by pressing escape.
+	buttonResume->handleInput(dt);
 	if (buttonResume->wasPressed())
 	{
+		gameData->audioManager->getMusic()->play();
 		gameData->stateManager->popState();
 	}
 	if (gameData->input->isKeyDown(sf::Keyboard::Escape))
 	{
 		gameData->input->setKeyUp(sf::Keyboard::Escape);
+		gameData->audioManager->getMusic()->play();
 		gameData->stateManager->popState();
 	}
 
+	buttonRestart->handleInput(dt);
 	if (buttonRestart->wasPressed())
 	{
+		// Reload the paused level
 		gameData->stateManager->popState();
 		gameData->stateManager->replaceState(new PreLevelState(gameData, level));
 	}
 
+	buttonQuit->handleInput(dt);
 	if (buttonQuit->wasPressed())
 	{
+		// Go to the main menu
 		gameData->stateManager->popState();
 		gameData->stateManager->replaceState(new MainMenuState(gameData));
 	}

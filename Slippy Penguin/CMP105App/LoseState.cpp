@@ -14,8 +14,8 @@ LoseState::LoseState(GameData* _gameData, int _level, std::string loseMessage) :
 	gameData->fontSettings->applyRegularSettings(&textMessage);
 	gameData->fontSettings->centreTextOrigin(&textMessage);
 
-	buttonContinue = new Button(gameData);
-	buttonContinue->setText("Try again?");
+	buttonRetry = new Button(gameData);
+	buttonRetry->setText("Try again?");
 
 	buttonQuit = new Button(gameData);
 	buttonQuit->setText("Quit to menu");
@@ -27,22 +27,26 @@ LoseState::~LoseState()
 
 }
 
+
 void LoseState::handleInput(float dt)
 {
 	MenuState::handleInput(dt);
 
-	buttonContinue->handleInput(dt);
-	if (buttonContinue->wasPressed())
+	buttonRetry->handleInput(dt);
+	if (buttonRetry->wasPressed())
 	{
+		// Reload the level
 		gameData->stateManager->replaceState(LevelLoader::loadLevel(level, gameData));
 	}
 
 	buttonQuit->handleInput(dt);
 	if (buttonQuit->wasPressed())
 	{
+		// Quit to the main menu
 		gameData->stateManager->replaceState(new MainMenuState(gameData));
 	}
 }
+
 
 void LoseState::update(float dt)
 {
@@ -50,9 +54,10 @@ void LoseState::update(float dt)
 
 	textTitle.setPosition(windowCentre + sf::Vector2f(0, -140));
 	textMessage.setPosition(windowCentre + sf::Vector2f(0, -40));
-	buttonContinue->setPosition(windowCentre + sf::Vector2f(0, 60));
+	buttonRetry->setPosition(windowCentre + sf::Vector2f(0, 60));
 	buttonQuit->setPosition(windowCentre + sf::Vector2f(0, 140));
 }
+
 
 void LoseState::renderObjects()
 {
@@ -60,6 +65,6 @@ void LoseState::renderObjects()
 
 	gameData->window->draw(textTitle);
 	gameData->window->draw(textMessage);
-	buttonContinue->render();
+	buttonRetry->render();
 	buttonQuit->render();
 }

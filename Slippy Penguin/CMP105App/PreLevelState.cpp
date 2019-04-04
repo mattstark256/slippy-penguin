@@ -5,13 +5,13 @@
 
 PreLevelState::PreLevelState(GameData* _gameData, int _level) : MenuState(_gameData), level(_level)
 {
+	// The title text shows the number of the upcoming level
 	textTitle.setString("Level " + std::to_string(level));
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
 	buttonStart = new Button(gameData);
 	buttonStart->setText("Start!");
-
 }
 
 

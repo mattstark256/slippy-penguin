@@ -10,6 +10,7 @@
 #include "FallingSnow.h"
 
 
+// This is the base class for all game levels.
 class LevelState :
 	public State
 {

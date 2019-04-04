@@ -50,6 +50,7 @@ void PrologueState::update(float dt)
 	textInstruction1.setPosition(windowCentre + sf::Vector2f(0, 50));
 	startButton->setPosition(windowCentre + sf::Vector2f(0, 160));
 
+	// The story panel is a looping two frame animation
 	int frame = (int)(gameData->gameClock->getTime() * 10) % 2;
 	storyPanel.setTextureRect(sf::IntRect(0 + frame * 48, 0, 48, 32));
 }

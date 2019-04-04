@@ -4,15 +4,13 @@
 #include "Framework/GameObject.h"
 
 
+// This is the camera viewing a level. It has a 3-dimensional position so it can zoom in and out.
 class Camera
 {
 public:
 	Camera(GameData* _gameData);
 	~Camera();
 
-	void setPosition(sf::Vector3f _position);
-	void move(sf::Vector3f _moveVector);
-	void setVerticalFov(float _verticalFov);
 	void update(float dt);
 	void setSubject(GameObject* _subject) { subject = _subject; }
 	void jumpToTarget();
@@ -23,17 +21,20 @@ public:
 private:
 	GameData* gameData;
 
-	// 3D position of camera, with positive z being away from the screen
-	sf::Vector3f position = sf::Vector3f(0, 0, 300);
-	sf::Vector3f targetPosition = sf::Vector3f(0, 0, 150);
-
 	// vertical field of view in degrees
 	float verticalFov = 60;
 
-	// If a subject is specified it will lerp towards its position
+	// 3D position of camera, with positive z being away from the screen
+	sf::Vector3f position = sf::Vector3f(0, 0, 300);
+
+	// The position the camera is moving towards
+	sf::Vector3f targetPosition = sf::Vector3f(0, 0, 150);
+
+	// If a subject is specified the camera will move towards its position plus followOffset
 	GameObject* subject;
-	float followSpeed = 7;
 	sf::Vector3f followOffset = sf::Vector3f(0.01, 0.01, 150); // The 0.01s prevent floating point errors when the camera lines up exactly with the pixel grid.
+
+	float moveSpeed = 7;
 
 	void updateTargetPosition();
 };

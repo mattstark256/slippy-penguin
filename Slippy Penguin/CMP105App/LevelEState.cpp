@@ -1,7 +1,6 @@
 #include "LevelEState.h"
 
 
-
 LevelEState::LevelEState(GameData* _gameData, int _level) : LevelState(_gameData, _level)
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelE.png");

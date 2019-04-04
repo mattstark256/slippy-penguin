@@ -21,6 +21,8 @@ MenuState::MenuState(GameData* _gameData) : State(_gameData)
 	texture.setRepeated(true);
 	wallpaper.setTexture(texture);
 	wallpaper.setScale(sf::Vector2f(WALLPAPER_SCALE, WALLPAPER_SCALE));
+
+	gameData->audioManager->stopAllMusic();
 }
 
 
@@ -39,6 +41,7 @@ void MenuState::update(float dt)
 {
 	State::update(dt);
 
+	// The background wallpaper constantly scrolls upwards.
 	wallpaper.setTextureRect(sf::IntRect(0, 0, gameData->window->getSize().x, gameData->window->getSize().y + 32));
 	float offset = -gameData->gameClock->getTime() * 20;
 	offset = fmod(offset, 32 * WALLPAPER_SCALE);

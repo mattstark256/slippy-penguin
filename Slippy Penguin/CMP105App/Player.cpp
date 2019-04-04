@@ -30,6 +30,7 @@ Player::~Player()
 
 void Player::handleInput(float dt)
 {
+	// Generate a direction vector based on the keys being pressed
 	inputVector = sf::Vector2f(0, 0);
 	if (gameData->input->isKeyDown(sf::Keyboard::A) || gameData->input->isKeyDown(sf::Keyboard::Left)) { inputVector.x -= 1; }
 	if (gameData->input->isKeyDown(sf::Keyboard::D) || gameData->input->isKeyDown(sf::Keyboard::Right)) { inputVector.x += 1; }
@@ -54,6 +55,7 @@ void Player::update(float dt)
 
 void Player::render()
 {
+	// During the sealDeath animation the player shouldn't be visible
 	if (playerState != sealDeath)
 	{
 		gameData->window->draw(*this);
@@ -71,8 +73,9 @@ void Player::walk(float dt)
 {
 	velocity = Vector::normalise(inputVector) * walkSpeed;
 	move(velocity * dt);
-	checkForCollisions();
+	checkForTilemapCollisions();
 
+	// The player can only win while they are in the walking state. This means if they get a fish while sliding across ice they need to safely finish the slide before they can win.
 	if (fishManager->allFishEaten())
 	{
 		level->win();
@@ -85,6 +88,7 @@ void Player::walk(float dt)
 	// Decide which frame to use based on the walkTimer and movement direction.
 	if (inputVector == sf::Vector2f(0, 0))
 	{
+		// Standing still
 		walkTimer = 0;
 		walkPhase = 0;
 	}
@@ -102,11 +106,11 @@ void Player::walk(float dt)
 void Player::slide(float dt)
 {
 	move(velocity * dt);
-	checkForCollisions();
+	checkForTilemapCollisions();
 
 	fishManager->tryTakingFish(this);
 
-	// The player is only vulnerable to attacks while sliding.
+	// The player is only vulnerable to seal attacks while sliding.
 	if (sealManager->checkForSealAttack(this))
 	{
 		startSealDeath();
@@ -114,6 +118,7 @@ void Player::slide(float dt)
 
 	setTextureRect(sf::IntRect(4 * 16, facingDirection * 16, 16, 16));
 
+	// Emit ice particles at regular intervals
 	slideParticleTimer += dt;
 	if (slideParticleTimer > slideParticleinterval)
 	{
@@ -121,7 +126,6 @@ void Player::slide(float dt)
 		sf::Vector2f trajectory = particleManager->getPointInEllipse(sf::Vector2f(0, -15), sf::Vector2f(50, 40));
 		particleManager->createParticle(ice, getPosition(), trajectory, 50, 0.5, 1);
 	}
-
 }
 
 
@@ -129,6 +133,8 @@ void Player::slide(float dt)
 void Player::fall(float dt)
 {
 	fallTimer += dt;
+
+	setTextureRect(sf::IntRect(1 * 16, facingDirection * 16, 16, 16));
 
 	// Use f (float 0-1) to animate the player falling into the water
 	float f = fallTimer / fallDuration;
@@ -141,12 +147,10 @@ void Player::fall(float dt)
 	{
 		startWhaleDeath();
 	}
-
-	setTextureRect(sf::IntRect(1 * 16, facingDirection * 16, 16, 16));
 }
 
 
-// Called on update when currentPlayerState is fallDeath
+// Called on update when currentPlayerState is whaleDeath
 void Player::whaleDie(float dt)
 {
 	whaleTimer += dt;
@@ -161,9 +165,11 @@ void Player::whaleDie(float dt)
 		int spriteHeight = 16 - sinkAmount - jumpAmount;
 		setSize(sf::Vector2f(32, spriteHeight));
 
+		// Alternate between two frames
 		int frame = fmod(whaleTimer * 16, 2);
 		setTextureRect(sf::IntRect(frame * 32, 4 * 16, 32, spriteHeight));
 
+		// Emit particles at regular intervals
 		whaleParticleTimer += dt;
 		if (whaleParticleTimer > whaleParticleinterval)
 		{
@@ -172,6 +178,7 @@ void Player::whaleDie(float dt)
 			particleManager->createParticle(water, whaleStartPos, trajectory, 100, 0.5, 1);
 		}
 
+		// The splash also alternates between two frames
 		frame = fmod(whaleTimer * 12, 2);
 		whaleSeamSplash->setTextureRect(sf::IntRect(frame * 32, 7 * 16, 32, 16));
 	}
@@ -193,13 +200,15 @@ void Player::eat(float dt)
 	eatTimer += dt;
 	if (eatTimer > eatDuration)
 	{
+		// Stop eating
 		playerState = walking;
 	}
 
+	// Alternate between two frames
 	int frame = fmod(eatTimer * 12, 2);
-
 	setTextureRect(sf::IntRect((5 + frame) * 16, facingDirection * 16, 16, 16));
 
+	// Emit particles at regular intervals
 	eatParticleTimer += dt;
 	if (eatParticleTimer > eatParticleinterval)
 	{
@@ -210,8 +219,10 @@ void Player::eat(float dt)
 }
 
 
+// Called on update when currentPlayerState is sealDeath
 void Player::sealDie(float dt)
 {
+	// Wait a while then lose. The attack animation is handled by the seal.
 	sealTimer += dt;
 	if (sealTimer > sealDuration)
 	{
@@ -221,7 +232,7 @@ void Player::sealDie(float dt)
 
 
 // Check what the player is colliding with and react accordingly
-void Player::checkForCollisions()
+void Player::checkForTilemapCollisions()
 {
 	sf::Vector2u currentTileCoords = (sf::Vector2u)tilemap->pointToTileCoords(getPosition());
 	GameObject* currentTile = tilemap->getTile(currentTileCoords);
@@ -278,17 +289,22 @@ void Player::startWhaleDeath()
 	whaleTimer = 0;
 	whaleStartPos = getPosition();
 
+	// Switch to the texture of the killer whale eating the penguin
+	setTextureRect(sf::IntRect(0 * 16, 4 * 16, 32, 16));
 	setSize(sf::Vector2f(32, 16));
 	setOrigin(16, 16);
 	setPosition(whaleStartPos);
-	setTextureRect(sf::IntRect(6 * 16, 0 * 16, 32, 16));
 
+	// Create the seam splash object. This hides the seam at the bottom of the killer whale.
 	whaleSeamSplash = new sf::RectangleShape();
 	whaleSeamSplash->setSize(sf::Vector2f(32, 16));
 	whaleSeamSplash->setOrigin(whaleSeamSplash->getSize()*0.5f);
 	whaleSeamSplash->setPosition(whaleStartPos);
 	whaleSeamSplash->setTexture(&texture);
 	whaleSeamSplash->setTextureRect(sf::IntRect(0, 7 * 16, 32, 16));
+
+	gameData->audioManager->stopAllMusic();
+	gameData->audioManager->playSoundbyName("scream");
 }
 
 
@@ -300,8 +316,12 @@ void Player::startEating()
 }
 
 
+// Prepare for sealDeath PlayerState
 void Player::startSealDeath()
 {
 	playerState = sealDeath;
 	sealTimer = 0;
+
+	gameData->audioManager->stopAllMusic();
+	gameData->audioManager->playSoundbyName("scream");
 }

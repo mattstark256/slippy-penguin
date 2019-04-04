@@ -22,6 +22,7 @@ private:
 	sf::Text textTitle;
 	Button* newGameButton;
 	Button* continueButton;
+	Button* creditsButton;
 	Button* quitButton;
 };
 

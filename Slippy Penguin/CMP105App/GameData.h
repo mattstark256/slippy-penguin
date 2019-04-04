@@ -6,6 +6,7 @@
 #include "PlayerData.h"
 #include "FontSettings.h"
 #include "GameClock.h"
+#include "Framework/AudioManager.h"
 
 
 // This struct is used to contain pointers to objects that should persist throughout execution, such as the Input object.
@@ -17,4 +18,5 @@ struct GameData
 	PlayerData* playerData;
 	FontSettings* fontSettings;
 	GameClock* gameClock;
+	AudioManager* audioManager;
 };

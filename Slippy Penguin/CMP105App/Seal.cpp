@@ -15,6 +15,7 @@ Seal::~Seal()
 {
 }
 
+
 void Seal::update(float dt)
 {
 	switch (sealState)
@@ -25,6 +26,7 @@ void Seal::update(float dt)
 }
 
 
+// Called by Penguin when they collide with a seal. Starts the eating animation.
 void Seal::startEating()
 {
 	sealState = eating;
@@ -32,20 +34,22 @@ void Seal::startEating()
 }
 
 
+// Called on update when sealState = moving
 void Seal::move(float dt)
 {
 	cyclePosition += dt / cycleDuration;
 	if (cyclePosition > 1) cyclePosition -= 1;
 	updatePosition();
-	int facingDirection = abs(directionVector.x) < abs(directionVector.y) ? (directionVector.y > 0 ? 3 : 1) : (directionVector.x > 0 ? 0 : 2);
 
+	// facingDirection is an int from 0 to 3 based on the direction of movement
+	int facingDirection = abs(directionVector.x) < abs(directionVector.y) ? (directionVector.y > 0 ? 3 : 1) : (directionVector.x > 0 ? 0 : 2);
+	// moveFrame alternates regularly between 0 and 1
 	moveTimer += dt;
 	int moveFrame = (int)(moveTimer / moveCycleDuration) % 2;
-
-
+	// Pick a frame based on facingDirection and moveFrame
 	setTextureRect(sf::IntRect(32 * moveFrame, 32 * facingDirection, 32, 32));
 
-
+	// Emit ice particles at regular intervals
 	moveParticleTimer += dt;
 	if (moveParticleTimer > moveParticleinterval)
 	{
@@ -56,18 +60,22 @@ void Seal::move(float dt)
 }
 
 
+// Called on update when sealState = eating
 void Seal::eat(float dt)
 {
+	// Find the frame number based on how long they've been eating
 	eatTimer += dt;
-
 	int frame = (int)(eatTimer * 16);
 
 	if (frame < EAT_FRAME_COUNT)
 	{
+		// Use the eatFrameTextures array too choose a texture
 		setTextureRect(sf::IntRect(64, 32 * eatFrameTextures[frame], 32, 32));
 
+		// Use the eatFrameBlood array to decide whether to emit blood particles
 		if (eatFrameBlood[frame] == 1)
 		{
+			// Emit blood particles at regular intervals
 			eatParticleTimer += dt;
 			if (eatParticleTimer > eatParticleinterval)
 			{
@@ -79,11 +87,13 @@ void Seal::eat(float dt)
 	}
 	else
 	{
+		// The animation has finished
 		setTextureRect(sf::IntRect(64, 0, 32, 32));
 	}
 }
 
 
+// This gets overridden by the derived seal classes
 void Seal::updatePosition()
 {
 }

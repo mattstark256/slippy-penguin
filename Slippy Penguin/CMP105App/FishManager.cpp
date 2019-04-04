@@ -28,6 +28,7 @@ FishManager::~FishManager()
 }
 
 
+// Adds a fish. Called when generating the level.
 void FishManager::addFish(sf::Vector2f position, int direction)
 {
 	GameObject* fish = new GameObject();
@@ -44,6 +45,7 @@ void FishManager::addFish(sf::Vector2f position, int direction)
 
 void FishManager::update(float dt)
 {
+	// The fish counter UI lerps towards its default size
 	textPulseAmount = textPulseAmount - (textPulseAmount - 1) * dt * 8;
 }
 
@@ -57,6 +59,7 @@ void FishManager::render()
 }
 
 
+// Render the UI consisting of a fish icon and counter text.
 void FishManager::renderUI()
 {
 	text.setString(std::to_string(initialFishCount - fishes.size()) + "/" + std::to_string(initialFishCount));
@@ -66,6 +69,7 @@ void FishManager::renderUI()
 }
 
 
+// Check for any collisions and return true if the player has collided with a fish
 bool FishManager::tryTakingFish(GameObject* playerObject)
 {
 	bool fishTaken = false;

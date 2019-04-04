@@ -3,7 +3,7 @@
 #include "Framework/TileMap.h"
 
 
-// This class acts as an interface for the Tilemap class.
+// This class acts as an interface for the Tilemap class. It also handles the water surrounding the tilemap.
 class TilemapManager
 {
 public:
@@ -27,6 +27,7 @@ private:
 	GameObject tileIce;
 	GameObject tileIceCliff;
 
+	// Background water
 	GameObject background;
 
 	// cliff tile animation variables

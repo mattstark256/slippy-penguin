@@ -3,6 +3,7 @@
 #include <iostream>
 #include "PrologueState.h"
 #include "PreLevelState.h"
+#include "CreditsState.h"
 
 
 MainMenuState::MainMenuState(GameData* _gameData) : MenuState(_gameData)
@@ -11,6 +12,7 @@ MainMenuState::MainMenuState(GameData* _gameData) : MenuState(_gameData)
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 
+	// There should only be a "Continue" button if the player has save data
 	if (gameData->playerData->saveDataExists())
 	{
 		newGameButton = new Button(gameData);
@@ -23,6 +25,9 @@ MainMenuState::MainMenuState(GameData* _gameData) : MenuState(_gameData)
 		newGameButton = new Button(gameData);
 		newGameButton->setText("Start game");
 	}
+
+	creditsButton = new Button(gameData);
+	creditsButton->setText("Credits");
 
 	quitButton = new Button(gameData);
 	quitButton->setText("Quit");
@@ -56,9 +61,17 @@ void MainMenuState::handleInput(float dt)
 		}
 	}
 
+	creditsButton->handleInput(dt);
+	if (creditsButton->wasPressed())
+	{
+		// Go to the credits screen
+		gameData->stateManager->replaceState(new CreditsState(gameData));
+	}
+
 	quitButton->handleInput(dt);
 	if (quitButton->wasPressed())
 	{
+		// Quit the application
 		gameData->window->close();
 	}
 }
@@ -71,16 +84,18 @@ void MainMenuState::update(float dt)
 	// The menu needs to be arranged differently to fit the "Continue" button
 	if (gameData->playerData->saveDataExists())
 	{
-		textTitle.setPosition(windowCentre + sf::Vector2f(0, -140));
-		continueButton->setPosition(windowCentre + sf::Vector2f(0, -40));
-		newGameButton->setPosition(windowCentre + sf::Vector2f(0, 40));
-		quitButton->setPosition(windowCentre + sf::Vector2f(0, 120));
+		textTitle.setPosition(windowCentre + sf::Vector2f(0, -180));
+		continueButton->setPosition(windowCentre + sf::Vector2f(0, -80));
+		newGameButton->setPosition(windowCentre + sf::Vector2f(0, 0));
+		creditsButton->setPosition(windowCentre + sf::Vector2f(0, 80));
+		quitButton->setPosition(windowCentre + sf::Vector2f(0, 160));
 	}
 	else
 	{
-		textTitle.setPosition(windowCentre + sf::Vector2f(0, -100));
-		newGameButton->setPosition(windowCentre + sf::Vector2f(0, 0));
-		quitButton->setPosition(windowCentre + sf::Vector2f(0, 80));
+		textTitle.setPosition(windowCentre + sf::Vector2f(0, -140));
+		newGameButton->setPosition(windowCentre + sf::Vector2f(0, -40));
+		creditsButton->setPosition(windowCentre + sf::Vector2f(0, 40));
+		quitButton->setPosition(windowCentre + sf::Vector2f(0, 120));
 	}
 }
 
@@ -91,6 +106,7 @@ void MainMenuState::renderObjects()
 
 	gameData->window->draw(textTitle);
 	newGameButton->render();
+	creditsButton->render();
 	quitButton->render();
 
 	if (gameData->playerData->saveDataExists())

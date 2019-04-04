@@ -2,6 +2,7 @@
 #include "Framework/GameObject.h"
 
 
+// This is the falling snow effect which appears in the foreground of every level.
 class FallingSnow
 {
 public:
@@ -13,7 +14,6 @@ public:
 
 private:
 	float cycleTimer;
-	float cycleDuration = 2;
 
 	sf::Texture texture;
 

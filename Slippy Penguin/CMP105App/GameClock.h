@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 
-// This class is used to measure the time since the application started. It's currently only used for keeping the wallpaper animation continuous between states.
+// This class is used to measure the time since the application started. It's used for things like keeping the menu background animation continuous between menu screens.
 class GameClock
 {
 public:

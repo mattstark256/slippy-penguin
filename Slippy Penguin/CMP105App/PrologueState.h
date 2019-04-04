@@ -4,6 +4,7 @@
 #include "Button.h"
 
 
+// This is the screen the player sees when starting a new game. It includes story text and an animation.
 class PrologueState :
 	public MenuState
 {

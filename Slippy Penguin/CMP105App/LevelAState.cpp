@@ -8,7 +8,7 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 {
 	tilemapManager.generateTilemap("gfx/Levels/LevelA.png");
 
-	player->setPosition(tileToPosition(13, 6.5));
+	player->setPosition(tileToPosition(13, 6.3));
 	player->setFacingDirection(2);
 	camera->jumpToTarget();
 
@@ -16,8 +16,6 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 	fishManager->addFish(tileToPosition(15, 3), 1);
 	fishManager->addFish(tileToPosition(16, 4), 2);
 	fishManager->addFish(tileToPosition(12, 8), 1);
-
-
 
 	if (!arrowTexture.loadFromFile(ARROW_TEXTURE_FILE_PATH))
 	{
@@ -32,6 +30,7 @@ LevelAState::LevelAState(GameData* _gameData, int _level) : LevelState(_gameData
 LevelAState::~LevelAState()
 {
 }
+
 
 void LevelAState::renderUniqueLevelObjects()
 {
