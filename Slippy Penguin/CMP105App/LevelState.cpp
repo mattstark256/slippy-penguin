@@ -16,7 +16,7 @@ LevelState::LevelState(GameData* _gameData, int _level) : State(_gameData), leve
 	player = new Player(gameData, this, &tilemapManager, &particleManager, fishManager, sealManager);
 	camera->setSubject(player);
 
-	gameData->audioManager->playMusicbyName("snowman");
+	gameData->audioManager->getMusic()->play();
 }
 
 

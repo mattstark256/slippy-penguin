@@ -8,7 +8,7 @@
 
 MainMenuState::MainMenuState(GameData* _gameData) : MenuState(_gameData)
 {
-	textTitle.setString("Slippy Penguin");
+	textTitle.setString("Frozen Foods");
 	gameData->fontSettings->applyTitleSettings(&textTitle);
 	gameData->fontSettings->centreTextOrigin(&textTitle);
 

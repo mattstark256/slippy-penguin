@@ -12,6 +12,8 @@ WinState::WinState(GameData* _gameData, int _level) : MenuState(_gameData), leve
 
 	buttonContinue = new Button(gameData);
 	buttonContinue->setText("Continue");
+
+	gameData->audioManager->playSoundbyName("win");
 }
 
 

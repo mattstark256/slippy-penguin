@@ -303,7 +303,7 @@ void Player::startWhaleDeath()
 	whaleSeamSplash->setTexture(&texture);
 	whaleSeamSplash->setTextureRect(sf::IntRect(0, 7 * 16, 32, 16));
 
-	gameData->audioManager->stopAllMusic();
+	gameData->audioManager->getMusic()->pause();
 	gameData->audioManager->playSoundbyName("scream");
 }
 
@@ -313,6 +313,8 @@ void Player::startEating()
 {
 	playerState = eating;
 	eatTimer = 0;
+
+	gameData->audioManager->playSoundbyName("eat fish");
 }
 
 
@@ -322,6 +324,6 @@ void Player::startSealDeath()
 	playerState = sealDeath;
 	sealTimer = 0;
 
-	gameData->audioManager->stopAllMusic();
+	gameData->audioManager->getMusic()->pause();
 	gameData->audioManager->playSoundbyName("scream");
 }

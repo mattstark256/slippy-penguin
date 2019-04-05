@@ -22,7 +22,7 @@ MenuState::MenuState(GameData* _gameData) : State(_gameData)
 	wallpaper.setTexture(texture);
 	wallpaper.setScale(sf::Vector2f(WALLPAPER_SCALE, WALLPAPER_SCALE));
 
-	gameData->audioManager->stopAllMusic();
+	gameData->audioManager->getMusic()->pause();
 }
 
 

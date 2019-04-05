@@ -19,6 +19,8 @@ LoseState::LoseState(GameData* _gameData, int _level, std::string loseMessage) :
 
 	buttonQuit = new Button(gameData);
 	buttonQuit->setText("Quit to menu");
+
+	gameData->audioManager->playSoundbyName("lose");
 }
 
 

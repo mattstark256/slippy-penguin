@@ -25,6 +25,8 @@ FinalWinState::FinalWinState(GameData* _gameData, int _level) : MenuState(_gameD
 
 	buttonContinue = new Button(gameData);
 	buttonContinue->setText("Quit to menu");
+
+	gameData->audioManager->playSoundbyName("win");
 }
 
 
