@@ -55,6 +55,7 @@ void Button::handleInput(float dt)
 		if (mouseDown && !mouseWasDown)
 		{
 			pressed = true;
+			gameData->audioManager->playSoundbyName("button");
 		}
 		// If a press has ended
 		if (!mouseDown && pressed)
